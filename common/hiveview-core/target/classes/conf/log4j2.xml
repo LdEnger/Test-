@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="off" monitorInterval="1800">
+    <properties>
+        <property name="LOG_HOME">/Users/shengyan/opt/logs/tomcat/core</property>
+        <property name="INFO_LOG_FILE_NAME">info</property>
+    </properties>
+
+    <Appenders>
+        <Console name="Console" target="SYSTEM_OUT">
+            <PatternLayout pattern="[%p]\t%d\t[%t]\t%c{3}\t(%F\:%L)\t-%m%n"/>
+        </Console>
+
+        <RollingRandomAccessFile name="InfoLog"
+                                 fileName="${LOG_HOME}/${INFO_LOG_FILE_NAME}.log"
+                                 filePattern="${LOG_HOME}/${INFO_LOG_FILE_NAME}.log.%d{yyyy-MM-dd}.gz">
+            <PatternLayout pattern="[%p]\t%d\t[%t]\t%c{3}\t(%F\:%L)\t-%m%n"/>
+            <Policies>
+                <TimeBasedTriggeringPolicy/>
+                <SizeBasedTriggeringPolicy size="100 MB"/>
+            </Policies>
+            <DefaultRolloverStrategy max="20"/>
+        </RollingRandomAccessFile>
+
+    </Appenders>
+
+    <Loggers>
+        <logger name="log4j.logger.java.sql" level="DEBUG"/>
+        <logger name="org.springframework" level="ERROR"/>
+        <logger name="log4j.logger.org.apache.http" level="ERROR"/>
+
+        <!-- OFF、FATAL、ERROR、WARN、INFO、DEBUG、TRACE、 ALL -->
+        <root level="all" includeLocation="true">
+            <appender-ref ref="Console"/>
+            <appender-ref ref="InfoLog"/>
+        </root>
+    </Loggers>
+</Configuration>
