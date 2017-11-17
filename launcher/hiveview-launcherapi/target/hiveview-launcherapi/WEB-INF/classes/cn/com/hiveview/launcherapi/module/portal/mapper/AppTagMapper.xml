@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.com.hiveview.launcherapi.module.portal.mapper.AppTagMapper">
+    <resultMap id="appTagMap" type="cn.com.hiveview.entity.module.portal.AppTagListVo">
+        <id column="tag_id" property="tagId"/>
+        <result column="category_id" property="categoryId"/>
+        <result column="tag_name" property="tagName"/>
+        <result column="appCount" property="tagCount"/>
+    </resultMap>
+    <select id="getPage" resultMap="appTagMap" parameterType="cn.com.hiveview.launcherapi.module.portal.condition.AppTagListConditon">
+        SELECT t.tag_id,t.tag_name,t.category_id,count(r.app_id) as appCount FROM app_tag as  t
+        INNER  JOIN  app_tag_relate as  r
+        ON r.category_id = t.category_id AND r.tag_id = t.tag_id
+        <where>
+            <if test="categoryId != null">
+                and t.category_id = #{categoryId}
+            </if>
+            <if test="tagName != null and tagName != ''">
+                and t.tag_name LIKE CONCAT('%',#{tagName},'%')
+            </if>
+                and t.state = 1
+        </where>
+        GROUP BY r.category_id,r.tag_id
+        <if test="pageIndex != null and pageSize != null">
+            limit #{pageIndex},#{pageSize}
+        </if>
+    </select>
+
+    <select id="getCount" parameterType="cn.com.hiveview.launcherapi.module.portal.condition.AppTagListConditon" resultType="Integer">
+        SELECT COUNT(1) FROM (
+        SELECT COUNT(1)
+        FROM app_tag as  t
+        INNER  JOIN  app_tag_relate as  r
+        ON r.category_id = t.category_id AND r.tag_id = t.tag_id
+        <where>
+            <if test="categoryId != null">
+                and t.category_id = #{categoryId}
+            </if>
+            <if test="tagName != null and tagName != ''">
+                and t.tag_name LIKE CONCAT('%',#{tagName},'%')
+            </if>
+            and t.state = 1
+        </where>
+        GROUP BY r.category_id,r.tag_id ) t
+    </select>
+</mapper>

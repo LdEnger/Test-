@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.com.hiveview.launcherapi.module.portal.mapper.PortalAreaAdminirationMapper">
+    <resultMap id="AreaAdminirationMap" type="cn.com.hiveview.entity.module.portal.PortalAreaAdministrationListVo">
+        <id column="id" property="id" />
+        <result column="area_name" property="areaName"/>
+        <result column="area_title" property="areaTitle"/>
+        <result column="effective" property="effective"/>
+        <result column="area_introduce" property="areaIntroduce"/>
+        <result column="area_img" property="areaImg" />
+        <result column="create_time" property="createTime"/>
+        <result column="update_time" property="updateTime"/>
+    </resultMap>
+
+    <select id="getPage" resultMap="AreaAdminirationMap" parameterType="cn.com.hiveview.launcherapi.module.portal.condition.PortalAreaAdminirationListCondition">
+        SELECT id,area_name,area_title,effective,area_introduce,area_img,create_time,update_time
+        FROM portal_area_administration
+        <where>
+        <if test="areaName != null and areaName != ''">
+             AND area_name LIKE  CONCAT('%',#{areaName},'%')
+        </if>
+        <if test="effective != null">
+            and effective = #{effective}
+        </if>
+        </where>
+        <if test="pageIndex != null and  pageSize != null">
+            limit #{pageIndex},#{pageSize}
+        </if>
+
+    </select>
+    <select id="getCount" parameterType="cn.com.hiveview.launcherapi.module.portal.condition.PortalAreaAdminirationListCondition" resultType="Integer">
+        SELECT  count(1)
+        FROM portal_area_administration
+        WHERE  1=1
+        <if test="areaName != null and areaName != ''">
+            and area_name   LIKE CONCAT('%',#{areaName},'%')
+        </if>
+        <if test="effective != null">
+            AND effective = #{effective}
+        </if>
+    </select>
+
+    <insert id="save" parameterType="cn.com.hiveview.launcherapi.module.portal.condition.PortalAreaAdminirationListCondition">
+        INSERT  INTO
+        portal_area_administration(area_name,area_title,effective,area_introduce,area_img,create_time,update_time)
+        VALUES
+         (#{areaName},#{areaTitle},#{effective},#{areaIntroduce},#{areaImg},NOW(),NOW())
+    </insert>
+
+    <delete id="delete" parameterType="cn.com.hiveview.launcherapi.module.portal.condition.PortalAreaAdminirationListCondition">
+        DELETE FROM
+        portal_area_administration where id = #{id}
+    </delete>
+
+    <update id="update" parameterType="cn.com.hiveview.launcherapi.module.portal.condition.PortalAreaAdminirationListCondition">
+        UPDATE portal_area_administration
+        <set>
+            <if test="areaName != null and areaName != ''">
+                area_name = #{areaName},
+            </if>
+            <if test="areaTitle != null and areaTitle != ''">
+                area_title = #{areaTitle},
+            </if>
+            <if test="effective != null">
+                effective = #{effective},
+            </if>
+            <if test="areaIntroduce != null and areaIntroduce != ''">
+                area_introduce = #{areaIntroduce},
+            </if>
+            <if test="areaImg != null and areaImg != ''">
+                area_img = #{areaImg},
+            </if>
+            update_time = NOW()
+        </set>
+        where id = #{id}
+    </update>
+</mapper>

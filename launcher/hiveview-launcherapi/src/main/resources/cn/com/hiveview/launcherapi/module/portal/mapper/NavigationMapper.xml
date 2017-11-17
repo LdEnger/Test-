@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.com.hiveview.launcherapi.module.portal.mapper.NavigationMapper">
+    <resultMap id="portalScreenRecommendListMap" type="cn.com.hiveview.entity.module.portal.PortalScreenRecommendList">
+        <id column="recommend_id" property="recommendId"/>
+        <result column="recommend_name" property="recommendName"/>
+        <result column="recommend_type" property="recommendType"/>
+        <result column="time_span" property="timeSpan"/>
+        <result column="title" property="title"/>
+        <result column="second_title" property="secondTitle"/>
+        <result column="is_play" property="isPlay"/>
+        <result column="big_pic" property="bigPic"/>
+        <result column="album_type" property="albumType"/>
+        <result column="apk_name" property="apkName"/>
+        <result column="cid" property="cid"/>
+        <result column="content_focus" property="contentFocus"/>
+        <result column="content_id" property="contentId"/>
+        <result column="count" property="count"/>
+        <result column="image_type" property="imageType"/>
+        <result column="content_type" property="contentType"/>
+        <result column="content_img" property="contentImg"/>
+        <result column="content_name" property="contentName"/>
+        <result column="hot_word_id" property="hotWordId"/>
+        <result column="hot_word_type" property="hotWordType"/>
+        <result column="is_txt_show" property="isTxtShow"/>
+        <result column="is_use_app" property="isUseApp"/>
+        <result column="is_effective" property="isEffective"/>
+        <result column="count1" property="count1"/>
+        <result column="count2" property="count2"/>
+    </resultMap>
+    <resultMap id="portalScreenRecommendListApiMap" type="cn.com.hiveview.entity.module.portal.PortalScreenRecommendListApiVo">
+        <id column="recommend_id" property="recommendId"/>
+        <result column="recommend_type" property="recommendType"/>
+        <result column="time_span" property="timeSpan"/>
+        <result column="title" property="title"/>
+        <result column="second_title" property="secondTitle"/>
+        <result column="is_play" property="isPlay"/>
+        <result column="big_pic" property="bigPic"/>
+        <result column="apk_name" property="apkName"/>
+        <result column="cid" property="cid"/>
+        <result column="content_id" property="contentId"/>
+        <result column="content_type" property="contentType"/>
+        <result column="content_img" property="contentImg"/>
+        <result column="hot_word_id" property="hotWordId"/>
+        <result column="seq" property="seq"/>
+    </resultMap>
+
+
+    <resultMap id="getNavigationListMap" type="cn.com.hiveview.entity.module.portal.NavigationVo">
+        <id column="id" property="id"/>
+        <result column="tab_title" property="title"/>
+        <result column="tab_icon" property="titleBackgroud"/>
+        <result column="tab_back_pic" property="navBackgroud"/>
+    </resultMap>
+
+    <select id="getNavigationList"  parameterType="Integer" resultMap="getNavigationListMap">
+        select tab.id,tab.tab_title,tab.tab_icon,tab.tab_back_pic,middle.seq
+          FROM
+          portal_tab tab INNER JOIN portal_launcher_tab middle on tab.id=middle.tab_id
+          where middle.belong_templet_id=#{templetId} AND middle.is_effective=1 and tab.is_effective=1
+        order by middle.seq
+    </select>
+
+    <select id="getDefaultTapPic" resultType="java.util.HashMap">
+        select img_addr as imgUrl  from portal_screen_big_pics where tab_background=1 ORDER BY id DESC  LIMIT  1
+    </select>
+
+    <select id="getVipPic" resultType="String" parameterType="String">
+        select vip_logo as vipLogo from portal_vip_logo WHERE logo_id=#{vipId} and effective=0 limit 1;
+    </select>
+
+
+    <sql id="homeColumn">
+        recommend_id,recommend_name,recommend_type,time_span
+    </sql>
+    <select id="getList" resultMap="portalScreenRecommendListApiMap"
+            parameterType="cn.com.hiveview.launcherapi.module.portal.condition.PortalScreenRecommendListCondition">
+        select
+        p.recommend_id,p.time_span,c.title,c.second_title,c.is_play,c.big_pic,c.apk_name,c.cid,c.content_id,
+        c.content_type,c.content_img
+        from portal_screen_recommend_list p
+        inner join portal_screent_recommend_content c on c.belong_recomend_id =p.recommend_id
+        where 1=1
+        <if test="recommendId !=null">
+            and p.recommend_id = #{recommendId}
+        </if>
+        <if test="recommendType==null or recommendType == 0">
+            and p.recommend_type =0 and c.image_type = 0
+        </if>
+        <if test="recommendType !=null and recommendType > 0">
+            and p.recommend_type > 0 and c.image_type = #{imageType}
+        </if>
+        <if test="isEffective !=null">
+            and c.is_effective=#{isEffective}
+        </if>
+          order by c.seq
+        <if test="pageSize != null">
+            limit #{pageIndex}, #{pageSize}
+        </if>
+    </select>
+    <select id="getCount" resultType="Integer"
+            parameterType="cn.com.hiveview.launcherapi.module.portal.condition.PortalScreenRecommendListCondition">
+        select count(1) from portal_screen_recommend_list p
+        inner join portal_screent_recommend_content c on c.belong_recomend_id =p.recommend_id
+        where 1=1
+        <if test="recommendId !=null">
+            and p.recommend_id = #{recommendId}
+        </if>
+        <if test="recommendType==null or recommendType == 0">
+            and p.recommend_type =0 and c.image_type = 0
+        </if>
+        <if test="recommendType !=null and recommendType > 0">
+            and p.recommend_type > 0 and c.image_type >0
+        </if>
+        <if test="isEffective !=null">
+            and c.is_effective=#{isEffective}
+        </if>
+    </select>
+    <insert id="add" parameterType="cn.com.hiveview.launcherapi.module.portal.condition.PortalScreenRecommendListCondition">
+        insert into portal_screen_recommend_list (recommend_name,time_span,recommend_type) values (#{recommendName},#{timeSpan},#{recommendType})
+    </insert>
+     <select id="getPageList" resultMap="portalScreenRecommendListMap"
+            parameterType="cn.com.hiveview.launcherapi.module.portal.condition.PortalScreenRecommendListCondition">
+         <if  test="recommendType == 0">
+         select p.recommend_id,p.recommend_name,p.recommend_type,p.time_span,p.is_effective,c.count FROM (SELECT * FROM portal_screen_recommend_list WHERE recommend_type = 0) p LEFT JOIN (SELECT belong_recomend_id ,COUNT(id) COUNT FROM portal_screent_recommend_content GROUP BY belong_recomend_id ) c ON p.recommend_id = c.belong_recomend_id
+         </if>
+         <if  test="recommendType == 1">
+             SELECT p.recommend_id,p.recommend_name,p.recommend_type,p.time_span,p.is_effective,c.count1,s.count2 FROM (SELECT * FROM portal_screen_recommend_list WHERE recommend_type > 0) p LEFT JOIN (SELECT belong_recomend_id ,COUNT(id) COUNT1 FROM portal_screent_recommend_content WHERE image_type
+             = 1 GROUP BY belong_recomend_id ) c ON p.recommend_id = c.belong_recomend_id LEFT JOIN (SELECT belong_recomend_id ,COUNT(id) COUNT2 FROM portal_screent_recommend_content WHERE image_type =2 GROUP BY belong_recomend_id )s ON p.recommend_id = s.belong_recomend_id
+         </if>
+            where p.is_effective > -1
+         <if test="isEffective != null">
+             and p.is_effective = #{isEffective}
+         </if>
+         <if test="recommendName != null and recommendName != ''">
+             and recommend_name  like CONCAT('%','${recommendName}','%' )
+         </if>
+         <if test="pageSize != null">
+             limit #{pageIndex}, #{pageSize}
+         </if>
+    </select>
+    <select id="getPageCount" resultType="Integer" parameterType="cn.com.hiveview.launcherapi.module.portal.condition.PortalScreenRecommendListCondition">
+        <if  test="recommendType == 0">
+             select COUNT(recommend_id) FROM portal_screen_recommend_list where recommend_type = #{recommendType}
+        </if>
+        <if  test="recommendType == 1">
+            select COUNT(recommend_id) FROM portal_screen_recommend_list where recommend_type > 0
+        </if>
+            and is_effective > -1
+        <if test="isEffective != null">
+            and is_effective = #{isEffective}
+        </if>
+        <if test="recommendName != null and recommendName != ''">
+            and recommend_name  like CONCAT('%','${recommendName}','%' )
+        </if>
+    </select>
+    <delete id="delete" parameterType="cn.com.hiveview.launcherapi.module.portal.condition.PortalScreenRecommendListCondition">
+        DELETE FROM
+        portal_screen_recommend_list
+        <where>
+            <if test="recommendId != null">
+                AND recommend_id= #{recommendId}
+            </if>
+        </where>
+
+    </delete>
+    <update id="update" parameterType="cn.com.hiveview.launcherapi.module.portal.condition.PortalScreenRecommendListCondition">
+        UPDATE portal_screen_recommend_list
+        <set>
+            <if test="recommendName != null and recommendName != ''">
+                recommend_name = #{recommendName},
+            </if>
+            <if test="timeSpan != null">
+                time_span = #{timeSpan},
+            </if>
+            <if test="isEffective != null">
+                is_effective = #{isEffective},
+            </if>
+        </set>
+        WHERE recommend_id=#{recommendId}
+    </update>
+    <select id="getComboboxList" resultMap="portalScreenRecommendListMap"
+            parameterType="cn.com.hiveview.launcherapi.module.portal.condition.PortalScreenRecommendListCondition">
+        <if  test="recommendType == 0">
+            select p.recommend_id,p.recommend_name,p.recommend_type,p.time_span,p.is_effective,c.count FROM (SELECT * FROM portal_screen_recommend_list WHERE recommend_type = 0) p LEFT JOIN (SELECT belong_recomend_id ,COUNT(id) COUNT FROM portal_screent_recommend_content GROUP BY belong_recomend_id ) c ON p.recommend_id = c.belong_recomend_id
+        </if>
+        <if  test="recommendType == 1">
+            SELECT p.recommend_id,p.recommend_name,p.recommend_type,p.time_span,p.is_effective,c.count1,s.count2 FROM (SELECT * FROM portal_screen_recommend_list WHERE recommend_type > 0) p LEFT JOIN (SELECT belong_recomend_id ,COUNT(id) COUNT1 FROM portal_screent_recommend_content WHERE image_type
+            = 1 GROUP BY belong_recomend_id ) c ON p.recommend_id = c.belong_recomend_id LEFT JOIN (SELECT belong_recomend_id ,COUNT(id) COUNT2 FROM portal_screent_recommend_content WHERE image_type =2 GROUP BY belong_recomend_id )s ON p.recommend_id = s.belong_recomend_id
+        </if>
+        where p.is_effective > -1
+        <if test="isEffective != null">
+            and p.is_effective = #{isEffective}
+        </if>
+    </select>
+</mapper>

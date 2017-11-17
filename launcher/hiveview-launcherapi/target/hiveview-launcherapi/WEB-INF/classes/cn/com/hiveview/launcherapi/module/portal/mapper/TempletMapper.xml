@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.com.hiveview.launcherapi.module.portal.mapper.TempletMapper">
+    <resultMap id="templetMap" type="cn.com.hiveview.entity.module.portal.TempletList">
+        <id column="id" property="id" />
+        <result column="name" property="name" />
+        <result column="is_effective" property="isEffective" />
+    </resultMap>
+    <sql id="baseColumns">
+        <![CDATA[id,name,is_effective,seq,create_time,update_time]]>
+    </sql>
+    <sql id="findPageWhere">
+        <where>
+            <if test="id != null">
+                AND id = #{id}
+            </if>
+            <if test="name != null and name != ''">
+                AND name LIKE CONCAT ('%',#{name},'%')
+            </if>
+            <if test="isEffective !=null">
+                AND is_effective=#{isEffective}
+            </if>
+        </where>
+    </sql>
+    <select id="getList" resultMap="templetMap"
+            parameterType="cn.com.hiveview.launcherapi.module.portal.condition.TempletCondition">
+        SELECT
+        <include refid="baseColumns" />
+        FROM
+        new_base_templet
+    </select>
+</mapper>

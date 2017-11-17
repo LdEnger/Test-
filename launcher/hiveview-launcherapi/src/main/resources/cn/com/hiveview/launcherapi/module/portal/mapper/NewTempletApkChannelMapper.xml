@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.com.hiveview.launcherapi.module.portal.mapper.NewTempletApkChannelMapper">
+    <resultMap id="apkChannelMap" type="cn.com.hiveview.entity.module.portal.NewTempletApkChannelListVo">
+        <id column="id" property="id"/>
+        <result column="apk_bag_name" property="apkBagName"/>
+        <result column="c_type" property="cType"/>
+        <result column="cname" property="cName"/>
+    </resultMap>
+    <select id="getChannelPage" resultMap="apkChannelMap" parameterType="cn.com.hiveview.launcherapi.module.portal.condition.NewTempletApkChannelCondition">
+        SELECT id ,apk_bag_name,c_type,cname
+        FROM new_templet_apk_channel
+        <where>
+            c_type in (9,10)
+            <if test="apkBagName != null and apkBagName != ''">
+                and  apk_bag_name = #{apkBagName}
+            </if>
+            <if test="apkBagName == 'com.hiveview.cloudscreen.py'">
+            AND  cname NOT IN('包你想学','专题')
+            </if>
+            <if test="apkBagName == 'com.hiveview.cloudscreen.vipvideo'">
+                AND cname NOT IN('包你想看','专题')
+            </if>
+            and is_effective = 2
+            AND  show_category =1 OR  (id = 6
+            <if test="apkBagName != null and apkBagName != ''">
+                and  apk_bag_name = #{apkBagName}
+            </if>
+            and  is_effective = 2
+            )
+        </where>
+    </select>
+</mapper>

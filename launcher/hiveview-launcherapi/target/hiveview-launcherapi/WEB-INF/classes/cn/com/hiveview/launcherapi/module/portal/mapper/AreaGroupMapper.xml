@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.com.hiveview.launcherapi.module.portal.mapper.AreaGroupMapper">
+    <resultMap id="areaGroupMap" type="cn.com.hiveview.entity.module.portal.AreaGroupList">
+        <id column="id" property="id" />
+        <result column="area_code" property="areaCode" />
+        <result column="area_name" property="areaName" />
+    </resultMap>
+    <sql id="baseColumns">
+        <![CDATA[id,area_code,area_name]]>
+    </sql>
+    <select id="getAreaGroupList" resultMap="areaGroupMap"
+            parameterType="cn.com.hiveview.launcherapi.module.portal.condition.AreaGroupCondition">
+        SELECT
+        <include refid="baseColumns" />
+        FROM
+        area_group
+        <where>
+            <if test="areaCode!=null and areaCode!=''">
+                and area_code =#{areaCode}
+            </if>
+            <if test="areaName!=null and areaName !=''">
+                and area_name=#{areaName}
+            </if>
+            <if test="id != null">
+                and id <![CDATA[<>]]>#{id}
+            </if>
+        </where>
+    </select>
+</mapper>

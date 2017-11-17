@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="cn.com.hiveview.launcherapi.module.portal.mapper.NewVipActivityMapper">
+	<resultMap id="ActivityMap" type="cn.com.hiveview.entity.module.portal.NewVipActivityVo">
+		<id column="id" property="id" />
+		<result column="template_id" property="templateId"/> 
+		<result column="apk_pkg_name" property="apkPkgName"/> 
+		<result column="name" property="name"/> 
+		<result column="activity_info" property="desc"/> 
+		<result column="pic" property="pic"/> 	
+		<result column="condition_type" property="conditionType"/> 
+		<result column="activity_type" property="activityType"/> 
+		<result column="duration_year" property="durationYear"/> 
+		<result column="duration_month" property="durationMonth"/> 
+		<result column="duration_day" property="durationDay"/> 
+		<result column="duration_end" property="durationEnd"/> 
+		<result column="user_range" property="userRange"/> 
+		<result column="before_date" property="beforeDate"/> 
+		<result column="after_date" property="afterDate" /> 
+		<result column="is_effective" property="effective" /> 
+		<result column="seq" property="seq"/>
+		<result column="create_time" property="createTime" /> 
+		<result column="update_time" property="updateTime" />
+	</resultMap>
+	
+	<!-- 活动管理-活动列表 -->
+	<select id="getPageList" parameterType="cn.com.hiveview.launcherapi.module.portal.condition.NewVipActivityCondition" resultMap="ActivityMap">
+		SELECT
+		id,
+		template_id,
+		apk_pkg_name,
+		name,
+		activity_info,
+		pic,
+		condition_type,
+		activity_type,
+		duration_year,
+		duration_month,
+		duration_day,
+		duration_end,
+		user_range,
+		FROM_UNIXTIME(before_date,'%Y-%m-%d %H:%i'),
+		FROM_UNIXTIME(after_date,'%Y-%m-%d %H:%i'),
+		is_effective,
+		seq
+		FROM new_vip_activity
+		<where>
+			<if test="id != null">
+				AND id = #{id}
+			</if>
+			<if test="name != null and name != ''">
+				name LIKE CONCAT ('%',#{name},'%')
+			</if>
+			<if test="effective != null">
+				AND is_effective = #{effective}
+			</if>
+			<if test="apkPkgName != null">
+				and apk_pkg_name = #{apkPkgName}
+			</if>
+			<if test="templateId != null">
+				and template_id = #{templateId}
+			</if>
+			<if test="activityType != null">
+				and activity_type = #{activityType}
+			</if>
+			<if test="userRange != null">
+				and user_range = #{userRange}
+			</if>
+			<if test="conditionType != null">
+				and condition_type = #{conditionType}
+			</if>
+		</where>
+			ORDER BY seq 
+		<if test="pageIndex >= 0 and pageSize >= 1">
+			LIMIT #{pageIndex}, #{pageSize}
+		</if>
+	</select>
+	<select id="getPageCount" parameterType="cn.com.hiveview.launcherapi.module.portal.condition.NewVipActivityCondition" resultType="int">
+		SELECT COUNT(1) FROM new_vip_activity
+		<where>
+			<if test="id != null">
+				AND id = #{id}
+			</if>
+			<if test="name != null and name != ''">
+				name LIKE CONCAT ('%',#{name},'%')
+			</if>
+			<if test="effective != null">
+				AND is_effective = #{effective}
+			</if>
+			<if test="apkPkgName != null">
+				and apk_pkg_name = #{apkPkgName}
+			</if>
+			<if test="templateId != null">
+				and template_id = #{templateId}
+			</if>
+			<if test="activityType != null">
+				and activity_type = #{activityType}
+			</if>
+			<if test="userRange != null">
+				and user_range = #{userRange}
+			</if>
+			<if test="conditionType != null">
+				and condition_type = #{conditionType}
+			</if>
+		</where>
+	</select>
+</mapper>

@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.com.hiveview.launcherapi.module.portal.mapper.PortalLauncherTempletTabMapper">
+    <resultMap id="portalLauncherTempletContentMap" type="cn.com.hiveview.entity.module.portal.PortalLauncherTempletTabList">
+        <id column="id" property="id" />
+        <result column="belong_templet_id" property="belongTempletId" />
+        <result column="tab_id" property="tabId" />
+        <result column="tab_name" property="tabName" />
+        <result column="tab_icon" property="tabIcon" />
+        <result column="seq_is_top" property="seqIsTop" />
+        <result column="seq" property="seq" />
+        <result column="is_effective" property="isEffective" />
+        <result column="create_time" property="createTime" />
+    </resultMap>
+    <sql id="homeColumn">
+        id,belong_templet_id,tab_id,tab_name,tab_icon,seq_is_top,seq,is_effective,create_time
+    </sql>
+    <select id="getPageList" parameterType="cn.com.hiveview.launcherapi.module.portal.condition.PortalLauncherTempletTabCondition"
+            resultMap="portalLauncherTempletContentMap">
+        select id,belong_templet_id,tab_id as tabId,tab_name,tab_icon,seq_is_top,seq,is_effective,create_time FROM portal_launcher_tab WHERE 1=1
+        <if test="belongTempletId != null">
+            AND belong_templet_id=#{belongTempletId}
+        </if>
+        ORDER BY seq
+        <if test="pageSize != null">
+            limit #{pageIndex}, #{pageSize}
+        </if>
+    </select>
+    <select id="getComboboxList" parameterType="cn.com.hiveview.launcherapi.module.portal.condition.PortalLauncherTempletTabCondition"
+            resultMap="portalLauncherTempletContentMap">
+        select id,belong_templet_id,tab_id,tab_name,tab_icon,seq_is_top,seq,is_effective,create_time FROM portal_launcher_tab WHERE 1=1
+        <if test="belongTempletId != null">
+            AND belong_templet_id=#{belongTempletId}
+        </if>
+        <if test="tabId != null">
+            AND tab_id=#{tabId}
+        </if>
+        ORDER BY seq
+    </select>
+    <select id="getCount" parameterType="cn.com.hiveview.launcherapi.module.portal.condition.PortalLauncherTempletTabCondition" resultType="Integer">
+        SELECT count(id)
+        from portal_launcher_tab
+        <where>
+            <if test="belongTempletId != null">
+                AND belong_templet_id=#{belongTempletId}
+            </if>
+            <if test="tabId!=null">
+                AND tab_id=#{tabId}
+            </if>
+            <if test="tabName!=null">
+                AND tab_name=#{tabName}
+            </if>
+        </where>
+    </select>
+    
+    <select id="getMaxSeq" resultType="Integer" parameterType="cn.com.hiveview.launcherapi.module.portal.condition.PortalLauncherTempletTabCondition">
+        SELECT MAX(seq) FROM portal_launcher_tab WHERE 1=1
+        <if test="belongTempletId != null">
+            AND belong_templet_id=#{belongTempletId}
+        </if>
+    </select>
+    <select id="getPageCount" resultType="Integer" parameterType="cn.com.hiveview.launcherapi.module.portal.condition.PortalLauncherTempletTabCondition">
+        select COUNT(1) FROM portal_launcher_tab WHERE 1=1
+        <if test="belongTempletId != null">
+            AND belong_templet_id=#{belongTempletId}
+        </if>
+    </select>
+    <insert id="add" parameterType="cn.com.hiveview.launcherapi.module.portal.condition.PortalLauncherTempletTabCondition">
+        insert into portal_launcher_tab (belong_templet_id,tab_id,tab_name,tab_icon,seq_is_top,seq,is_effective,create_time)
+        values (#{belongTempletId},#{tabId},#{tabName},#{tabIcon},#{seqIsTop},#{seq},#{isEffective},#{createTime})
+    </insert>
+    <delete id="delete" parameterType="cn.com.hiveview.launcherapi.module.portal.condition.PortalLauncherTempletTabCondition">
+        DELETE FROM
+        portal_launcher_tab
+        <where>
+            <if test="id != null">
+                id= #{id}
+            </if>
+            <if test="belongTempletId != null">
+                AND belong_templet_id= #{belongTempletId}
+            </if>
+            <if test="tabId != null">
+                AND tab_id=#{tabId}
+            </if>
+            <if test="id == null and belongTempletId == null and tabId == null">
+                and FALSE
+            </if>
+        </where>
+
+
+    </delete>
+    <update id="update" parameterType="cn.com.hiveview.launcherapi.module.portal.condition.PortalLauncherTempletTabCondition">
+        UPDATE portal_launcher_tab
+        <set>
+            <if test="belongTempletId != null">
+                belong_templet_id = #{belongTempletId},
+            </if>
+            <if test="tabId != null">
+                tab_id = #{tabId},
+            </if>
+            <if test="tabName!=null">
+                tab_name = #{tabName},
+            </if>
+            <if test="tabIcon!=null">
+                tab_icon = #{tabIcon},
+            </if>
+            <if test="seqIsTop != null">
+                seq_is_top = #{seqIsTop},
+            </if>
+            <if test="seq != null">
+                seq = #{seq},
+            </if>
+            <if test="isEffective != null">
+                is_effective = #{isEffective}
+            </if>
+        </set>
+        <where>
+            <if test="id != null">
+                id=#{id}
+            </if>
+            <if test="tabId != null">
+                tab_id=#{tabId}
+            </if>
+        </where>
+
+    </update>
+    <select id="getMinTab" resultType="cn.com.hiveview.entity.module.portal.PortalLauncherTempletTabList" parameterType="cn.com.hiveview.launcherapi.module.portal.condition.PortalLauncherTempletTabCondition">
+        SELECT id,seq,seq_is_top as seqIsTop from portal_launcher_tab WHERE ( seq &lt; #{seq}
+        OR seq=(SELECT MIN(seq) FROM portal_launcher_tab where belong_templet_id=#{belongTempletId}) ) AND belong_templet_id=#{belongTempletId}
+        ORDER BY seq DESC limit 1
+    </select>
+
+    <select id="getMaxTab" resultType="cn.com.hiveview.entity.module.portal.PortalLauncherTempletTabList" parameterType="cn.com.hiveview.launcherapi.module.portal.condition.PortalLauncherTempletTabCondition">
+        SELECT id,seq,seq_is_top as seqIsTop from portal_launcher_tab WHERE ( seq &gt; #{seq}
+        OR seq=(SELECT MAX(seq) FROM portal_launcher_tab where belong_templet_id=#{belongTempletId}) ) AND belong_templet_id=#{belongTempletId}
+        ORDER BY seq ASC limit 1
+    </select>
+    <select id="getTopSeq" resultType="cn.com.hiveview.entity.module.portal.PortalLauncherTempletTabList" parameterType="cn.com.hiveview.launcherapi.module.portal.condition.PortalLauncherTempletTabCondition">
+        SELECT id,seq,seq_is_top from portal_launcher_tab where seq_is_top=1 and belong_templet_id=#{belongTempletId}
+    </select>
+</mapper>

@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.com.hiveview.launcherapi.module.portal.mapper.PortalMacAreaListMapper">
+    <resultMap id="portalMacAreaListMap" type="cn.com.hiveview.entity.module.portal.PortalMacAreaList">
+        <id column="id" property="id"/>
+        <result column="mac" property="mac"/>
+        <result column="sn" property="sn"/>
+        <result column="area_code" property="areaCode"/>
+        <result column="area_name" property="areaName"/>
+    </resultMap>
+    <sql id="homeColumn">
+        id,mac,sn,area_code,area_name
+    </sql>
+    <insert id="add" parameterType="cn.com.hiveview.launcherapi.module.portal.condition.PortalMacAreaCondition">
+        insert into mac_area (mac,sn,area_code,area_name) values (#{mac},#{sn},#{areaCode},#{areaName})
+    </insert>
+    <select id="getPageList" resultMap="portalMacAreaListMap"
+            parameterType="cn.com.hiveview.launcherapi.module.portal.condition.PortalMacAreaCondition">
+        select id,mac,sn,area_code,area_name FROM mac_area WHERE 1=1
+        <if test="areaCode != null and areaCode != ''">
+            AND area_code = #{areaCode}
+        </if>
+        <if test="mac != null and mac !=''">
+            AND mac LIKE CONCAT('%',#{mac},'%')
+        </if>
+        <if test="sn != null and sn!=''">
+            AND sn LIKE CONCAT('%',#{sn},'%')
+        </if>
+        ORDER BY id DESC
+        <if test="pageSize != null">
+            limit #{pageIndex}, #{pageSize}
+        </if>
+    </select>
+    <select id="getPageCount" resultType="Integer" parameterType="cn.com.hiveview.launcherapi.module.portal.condition.PortalMacAreaCondition">
+        select COUNT(1) FROM mac_area WHERE 1=1
+        <if test="areaCode != null and areaCode != ''">
+            AND area_code = #{areaCode}
+        </if>
+        <if test="mac != null and mac !=''">
+            AND mac LIKE CONCAT('%',#{mac},'%')
+        </if>
+        <if test="sn != null and sn!=''">
+            AND sn LIKE CONCAT('%',#{sn},'%')
+        </if>
+    </select>
+    <select id="getCountByCode" resultType="Integer" parameterType="cn.com.hiveview.launcherapi.module.portal.condition.PortalMacAreaCondition">
+        select COUNT(1) FROM mac_area where 1=1
+        <if test="areaCode!=null">
+            AND area_code=#{areaCode}
+        </if>
+    </select>
+    <delete id="delete" parameterType="cn.com.hiveview.launcherapi.module.portal.condition.PortalMacAreaCondition">
+        DELETE FROM
+        mac_area
+        <where>
+            <if test="id != null">
+                id= #{id}
+            </if>
+            <if test="areaCode != null">
+                AND area_code= #{areaCode}
+            </if>
+            <if test="id == null and areaCode == null">
+                and FALSE
+            </if>
+        </where>
+
+    </delete>
+    <update id="update" parameterType="cn.com.hiveview.launcherapi.module.portal.condition.PortalMacAreaCondition">
+        UPDATE mac_area
+        <set>
+            <if test="mac != null and mac != ''">
+                mac = #{mac},
+            </if>
+            <if test="sn != null">
+                sn = #{sn},
+            </if>
+            <if test="areaCode != null">
+                area_code = #{areaCode},
+            </if>
+            <if test="areaName != null">
+                area_name = #{areaName},
+            </if>
+        </set>
+        WHERE id=#{id}
+    </update>
+
+    <select id="get" resultMap="portalMacAreaListMap"
+            parameterType="cn.com.hiveview.launcherapi.module.portal.condition.PortalMacAreaCondition">
+        select id,mac,sn,area_code,area_name FROM mac_area
+        <where>
+            <if test="areaCode != null and areaCode != ''">
+                AND area_code = #{areaCode}
+            </if>
+            <if test="mac != null and mac !=''">
+                AND mac = #{mac}
+            </if>
+            <if test="sn != null and sn!=''">
+                AND sn = #{sn}
+            </if>
+        </where>
+    </select>
+    <select id="getCountByMacSn" resultType="Integer" parameterType="cn.com.hiveview.launcherapi.module.portal.condition.PortalMacAreaCondition">
+        select COUNT(1) FROM mac_area where 1=1
+        <if test="mac != null">
+            and mac = #{mac}
+        </if>
+        <if test="sn != null">
+            and sn = #{sn}
+        </if>
+        <if test="id!=null and id!=''">
+            AND id != #{id}
+        </if>
+    </select>
+</mapper>

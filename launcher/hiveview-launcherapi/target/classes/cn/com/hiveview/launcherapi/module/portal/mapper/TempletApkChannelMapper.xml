@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.com.hiveview.launcherapi.module.portal.mapper.TempletApkChannelMapper">
+    <resultMap id="templetApkChannelMap" type="cn.com.hiveview.entity.module.portal.TempletApkChannelVo">
+        <id column="id" property="id" />
+        <result column="c_type" property="cType" />
+        <result column="cname" property="cName" />
+        <result column="apk_id" property="apkId" />
+        <result column="apk_bag_name" property="apkBagName" />
+        <result column="templet_id" property="templetId" />
+        <result column="show_category" property="showCategory" />
+        <result column="is_multichip" property="isMultichip" />
+        <result column="is_has_detail" property="isHasDetail" />
+        <result column="is_horizontal" property="isHorizontal" />
+        <result column="is_specific" property="isSpecific" />
+        <result column="seq" property="seq" />
+        <result column="is_effective" property="isEffective" />
+        <result column="combox_id" property="comboxId" />
+        <result column="create_time" property="createTime" />
+        <result column="update_time" property="updateTime" />
+        <result column="c_type_name" property="cTypeName" />
+        <result column="parent_cid" property="parentCid" />
+        <result column="parent_ctype" property="parentCtype" />
+        <result column="parent_apkName" property="parentApkName" />
+    </resultMap>
+
+    <sql id="baseColumns">
+        <![CDATA[id,c_type,apk_id,apk_bag_name,templet_id,cname,show_category,is_multichip,is_has_detail,is_horizontal,is_specific,
+	    seq,is_effective,combox_id,create_time,update_time,c_type_name,parent_cid,parent_ctype,parent_apkName]]>
+    </sql>
+
+    <sql id="findPageWhere">
+        <where>
+            <if test="id != null">
+                AND id = #{id}
+            </if>
+            <if test="apkId != null">
+                AND apk_id = #{apkId}
+            </if>
+            <if test="cName != null and cName != ''">
+                AND cname LIKE CONCAT ('%',#{cName},'%')
+            </if>
+            <if test="comboxId != null">
+                AND combox_id = #{comboxId}
+            </if>
+            <if test="cType != null and cType != -1">
+                AND c_type = #{cType}
+            </if>
+            <if test="templetId != null and templetId !=''">
+                AND templet_id = #{templetId}
+            </if>
+            <if test="apkBagName != null and apkBagName !=''">
+                AND apk_bag_name = #{apkBagName}
+            </if>
+            <if test="isEffective !=null and isEffective == -1">
+                AND is_effective > 0
+            </if>
+            <if test="isEffective !=null and isEffective != -1">
+                AND is_effective=#{isEffective}
+            </if>
+            <if test="cType !=null and cType == -1">
+                AND (c_type=10 OR (c_type=9 AND (show_category != 1 OR show_category IS NULL)))
+            </if>
+        </where>
+    </sql>
+
+    <select id="getChannelList" parameterType="cn.com.hiveview.launcherapi.module.portal.condition.TempletApkChannelCondition" resultMap="templetApkChannelMap">
+        SELECT
+        <include refid="baseColumns" />
+        FROM
+        new_templet_apk_channel
+        <include refid="findPageWhere" />
+        ORDER BY seq ASC
+    </select>
+    <select id="getChannelTypeList" parameterType="cn.com.hiveview.launcherapi.module.portal.condition.TempletApkChannelCondition" resultMap="templetApkChannelMap">
+        SELECT
+        <include refid="baseColumns" />
+        FROM
+        new_templet_apk_channel
+        WHERE apk_bag_name = #{apkBagName} AND is_effective > 0 GROUP BY c_type
+        ORDER BY seq ASC
+    </select>
+</mapper>

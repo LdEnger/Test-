@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.com.hiveview.launcherapi.module.portal.mapper.OnlineGoodsMapper">
+    <resultMap id="onlineGoodsMap" type="cn.com.hiveview.entity.module.portal.OnlineGoodsList">
+        <id column="id" property="id" />
+        <result column="goods_name" property="name" />
+        <result column="sale_start_time" property="saleStartTime" />
+        <result column="sale_end_time" property="saleEndTime" />
+        <result column="sale_style" property="saleStyle" />
+        <result column="goods_desc" property="desc" />
+        <result column="price_style" property="priceStyle" />
+        <result column="is_booking" property="isBooking" />
+        <result column="booking_start_time" property="bookingStartTime" />
+        <result column="booking_end_time" property="bookingEndTime" />
+        <result column="first_poster_pic" property="firstPosterPic" />
+        <result column="second_poster_pic" property="secondPosterPic" />
+        <result column="templet_id" property="templetId" />
+        <result column="templet_name" property="templetName" />
+        <result column="seq" property="seq" />
+        <result column="is_effective" property="isEffective" />
+        <result column="create_time" property="createTime" />
+        <result column="update_time" property="updateTime" />
+        <result column="online_time" property="onlineTime" />
+        <result column="goods_price" property="price" />
+        <result column="days" property="days" />
+        <result column="partner_id" property="partnerId" />
+        <result column="partner_url" property="partnerUrl" />
+        <result column="damai_poster_pic1" property="damaiPosterPic1" />
+        <result column="damai_poster_pic2" property="damaiPosterPic2" />
+        <result column="damai_poster_pic3" property="damaiPosterPic3" />
+        <result column="label" property="label" />
+        <result column="end_time" property="endTime" />
+        <result column="goods_version" property="goodsVersion" />
+    </resultMap>
+    <sql id="baseColumns">
+        <![CDATA[
+id,goods_name,sale_start_time,sale_end_time,sale_style,price_style,is_booking,booking_start_time,booking_end_time,templet_id,
+templet_name,first_poster_pic,second_poster_pic,goods_desc,create_time,update_time,seq,is_effective,online_time,
+goods_price,days,partner_id,partner_url,damai_poster_pic1,damai_poster_pic2,damai_poster_pic3,label,end_time,goods_version]]>
+    </sql>
+
+    <sql id="findPageWhere">
+        <where>
+            <if test="id != null">
+                AND id = #{id}
+            </if>
+            <if test="name != null and name != ''">
+                AND goods_name LIKE CONCAT ('%',#{name},'%')
+            </if>
+            <if test="isEffective != null">
+                AND is_effective=#{isEffective}
+            </if>
+            <if test="saleStyle != null">
+                AND sale_style=#{saleStyle}
+            </if>
+            <if test="priceStyle != null">
+                AND price_style=#{priceStyle}
+            </if>
+            <if test="isBooking != null">
+                AND is_booking=#{isBooking}
+            </if>
+            <if test="goodsVersion != null">
+                AND goods_version=#{goodsVersion}
+            </if>
+        </where>
+    </sql>
+    <sql id="findWhere">
+        <where>
+            <if test="id != null">
+                AND id = #{id}
+            </if>
+            <if test="name != null and name != ''">
+                AND goods_name LIKE CONCAT ('%',#{name},'%')
+            </if>
+            AND is_effective = 1
+        </where>
+    </sql>
+    <select id="getPageList" resultMap="onlineGoodsMap"
+            parameterType="cn.com.hiveview.launcherapi.module.portal.condition.OnlineGoodsCondition">
+        SELECT
+        <include refid="baseColumns" />
+        FROM
+        new_online_goods
+        <include refid="findPageWhere" />
+
+        ORDER BY create_time desc
+        <if test="pageIndex >= 0 and pageSize >= 1">
+            LIMIT #{pageIndex}, #{pageSize}
+        </if>
+    </select>
+    <select id="getPageCount" resultType="Integer"
+            parameterType="cn.com.hiveview.launcherapi.module.portal.condition.OnlineGoodsCondition">
+        SELECT
+        count(id)
+        FROM
+        new_online_goods
+        <include refid="findPageWhere" />
+    </select>
+</mapper>

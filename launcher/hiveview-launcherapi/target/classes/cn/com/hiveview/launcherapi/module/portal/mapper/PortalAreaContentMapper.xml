@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.com.hiveview.launcherapi.module.portal.mapper.PortalAreaContentMapper">
+    <resultMap id="areaContentMap" type="cn.com.hiveview.entity.module.portal.PortalAreaContentListVo">
+        <id column="id" property="id"/>
+        <result column="area_name" property="areaName"/>
+        <result column="seq" property="seq"/>
+        <result column="area_id" property="areaId"/>
+        <result column="area_content" property="areaContent"/>
+        <result column="recommend_img" property="recommendImg"/>
+        <result column="background_img" property="backgroundImg"/>
+        <result column="area_type" property="areaType"/>
+        <result column="recommend_type" property="recommendType"/>
+        <result column="package_name" property="packageName"/>
+        <result column="area_template" property="areaTemplate"/>
+        <result column="channel_type" property="channelType"/>
+        <result column="channel" property="channel"/>
+        <result column="pay_state" property="payState"/>
+        <result column="vip_state" property="vipState"/>
+        <result column="id" property="id"/>
+    </resultMap>
+
+    <sql id="areaCloumn">
+        <![CDATA[id,area_name,seq,area_id,area_content,recommend_img,background_img,area_type,recommend_type,package_name,area_template,channel_type,channel,pay_state,vip_state]]>
+    </sql>
+
+    <select id="getPage" resultMap="areaContentMap" parameterType="cn.com.hiveview.launcherapi.module.portal.condition.PortalAreaContentListCondition">
+        SELECT <include refid="areaCloumn" />
+        FROM portal_area_content AS C
+        LEFT JOIN  portal_area_administration AS A
+        ON  C.area_id = A.id
+        <where>
+            <if test="areaName != null and areaName != ''">
+                AND  C.area_name LIKE  CONCAT('%',#{areaName},'%')
+            </if>
+            <if test="id != null and id != ''">
+                AND  C.area_id = #{id}
+            </if>
+        </where>
+        GROUP BY
+        seq
+        <if test="pageIndex != null and pageSize != null">
+            limit #{pageIndex},#{pageSize}
+        </if>
+    </select>
+
+    <select id="getCount"   parameterType="cn.com.hiveview.launcherapi.module.portal.condition.PortalAreaContentListCondition" resultType="Integer">
+        SELECT <include refid="areaCloumn"/>
+        FROM portal_area_content
+        <where>
+            <if test="areaName != null and areaName != ''">
+                AND area_name like CONCAT('%',#{areaName},'%')
+            </if>
+            <if test="id != null and id != ''">
+                AND  id = #{id}
+            </if>
+            <if test="areaId != null and areaId != ''">
+                AND area_id  = #{areaId}
+            </if>
+        </where>
+    </select>
+
+    <delete id="delete" parameterType="cn.com.hiveview.launcherapi.module.portal.condition.PortalAreaContentListCondition">
+        DELETE FROM
+        portal_area_content WHERE  id = #{id}
+    </delete>
+
+
+    <update id="update" parameterType="cn.com.hiveview.launcherapi.module.portal.condition.PortalAreaContentListCondition">
+        UPDATE portal_area_content
+        <set>
+            <if test="areaName != null and areaName != ''">
+                area_name = #{areaName},
+            </if>
+            <if test="seq != null">
+                seq = #{seq},
+            </if>
+            <if test="areaId != null and areaId != ''">
+                area_id = #{areaId},
+            </if>
+            <if test="areaContent != null and areaContent != ''">
+                area_content = #{areaContent},
+            </if>
+            <if test="recommendImg != null and recommendImg != ''">
+                recommend_img = #{recommendImg},
+            </if>
+            <if test="backgroundImg != null and backgroundImg != ''">
+                background_img = #{backgroundImg},
+            </if>
+            <if test="areaType != null and areaType != ''">
+                area_type = #{areaType},
+            </if>
+            <if test="recommendType != null and recommendType != ''">
+                recommend_type = #{recommendType},
+            </if>
+            <if test="packageName != null and packageName != ''">
+                package_name = #{packageName},
+            </if>
+            <if test="areaTemplate != null and areaTemplate != ''">
+                area_template = #{areaTemplate},
+            </if>
+            <if test="channelType != null and channelType !='' ">
+                channel_type = #{channelType},
+            </if>
+            <if test="channel != null and channel != '' ">
+                channel = #{channel},
+            </if>
+            <if test="payState != null and payState != ''">
+                pay_state = #{payState},
+            </if>
+            <if test="vipState != null and vipState != ''">
+                vip_state = #{vipState},
+            </if>
+        </set>
+        WHERE id = #{id}
+    </update>
+
+
+    <insert id="save" parameterType="cn.com.hiveview.launcherapi.module.portal.condition.PortalAreaContentListCondition">
+        INSERT  INTO
+        portal_area_content
+        (area_name,seq,area_id,area_content,recommend_img,background_img,area_type,recommend_type,package_name,area_template,channel_type,channel,pay_state,vip_state)
+        VALUES
+        (#{areaName},#{seq},#{areaId},#{areaContent},#{recommendImg},#{backgroundImg},#{areaType},#{recommendType},#{packageName},#{areaTemplate},#{channelType},#{channel},#{payState},#{vipState})
+    </insert>
+
+
+    <select id="getAreaMinSeq" parameterType="cn.com.hiveview.launcherapi.module.portal.condition.PortalAreaContentListCondition" resultType="cn.com.hiveview.entity.module.portal.PortalAreaContentListVo">
+        SELECT seq,id
+        FROM portal_area_content
+        WHERE (seq &lt; #{seq}
+        or seq = (select min(seq) FROM portal_area_content )) AND  id = #{id}
+        ORDER by seq desc limit 1
+    </select>
+    <select id="getAreaMaxSeq" parameterType="cn.com.hiveview.launcherapi.module.portal.condition.PortalAreaContentListCondition" resultType="cn.com.hiveview.entity.module.portal.PortalAreaContentListVo">
+      SELECT seq,id
+      FROM portal_area_content
+      WHERE (seq &gt; #{seq}
+      or seq = (SELECT MAX(seq) FROM portal_area_content)) AND id = #{id}
+      ORDER BY seq ASC limit 1
+    </select>
+
+</mapper>

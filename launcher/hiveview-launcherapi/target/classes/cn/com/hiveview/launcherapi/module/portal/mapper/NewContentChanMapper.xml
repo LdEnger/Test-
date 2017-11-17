@@ -1,0 +1,328 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.com.hiveview.launcherapi.module.portal.mapper.NewContentChanMapper">
+    <resultMap id="newContentChanMap" type="cn.com.hiveview.entity.module.portal.NewContentChanList">
+        <id column="id" property="Id" />
+        <result column="templet_id" property="templetId" />
+        <result column="templet_name" property="templetName" />
+        <result column="apk_id" property="apkId" />
+        <result column="apk_bag_name" property="apkBagName" />
+        <result column="apk_name" property="apkName" />
+        <result column="chn_id" property="chnId" />
+        <result column="chn_name" property="chnName" />
+        <result column="chn_type" property="chnType" />
+        <result column="is_vip" property="isVip" />
+        <result column="programset_id" property="programsetId" />
+        <result column="programset_type" property="programsetType" />
+        <result column="status" property="status" />
+        <result column="top" property="top" />
+        <result column="charging_type" property="chargingType" />
+        <result column="album_name" property="albumName" />
+        <result column="aqy_id" property="aqyId" />
+        <result column="jq_id" property="jqId" />
+        <result column="hkdb_id" property="hkdbId" />
+        <result column="third_id" property="thirdId" />
+        <result column="album_english_name" property="albumEnglishName" />
+        <result column="album_alias" property="albumAlias" />
+        <result column="chn_id" property="chnId" />
+        <result column="episode_total" property="episodeTotal" />
+        <result column="episode_updated" property="episodeUpdated" />
+        <result column="labels" property="labels" />
+        <result column="directors" property="directors" />
+        <result column="main_actors" property="mainActors" />
+        <result column="actors" property="actors" />
+        <result column="producer" property="producer" />
+        <result column="composers" property="composers" />
+        <result column="lyricists" property="lyricists" />
+        <result column="year" property="year" />
+        <result column="focus" property="focus" />
+        <result column="is_3d" property="is3d" />
+        <result column="is_4k" property="is4k" />
+        <result column="is_db" property="isDb" />
+        <result column="duration" property="duration" />
+        <result column="pre_duration" property="preDuration" />
+        <result column="pre_m3u8" property="preM3u8" />
+        <result column="album_hb_pic" property="albumHbPic" />
+        <result column="album_xqy_pic" property="albumXqyPic" />
+        <result column="album_x_pic" property="albumXPic" />
+        <result column="album_slt_pic" property="albumSltPic" />
+        <result column="season" property="season" />
+        <result column="phase" property="phase" />
+        <result column="is_effective" property="isEffective" />
+        <result column="keyword" property="keyword" />
+        <result column="album_type" property="albumType" />
+        <result column="album_desc" property="albumDesc" />
+        <result column="seq" property="seq" />
+        <result column="area" property="area" />
+        <result column="china_box_office" property="chinaBoxOffice" />
+        <result column="north_box_office" property="northBoxOffice" />
+        <result column="language" property="language" />
+        <result column="aqy_is_effective" property="aqyIsEffective" />
+        <result column="jq_is_effective" property="jqIsEffective" />
+        <result column="hkdb_is_effective" property="hkdbIsEffective" />
+        <result column="third_is_effective" property="thirdIsEffective" />
+        <result column="issue_time" property="issueTime" />
+        <result column="album_ylt_first_pic" property="albumYltFirstPic" />
+        <result column="album_ylt_second_pic" property="albumYltSecondPic" />
+        <result column="album_ylt_third_pic" property="albumYltThirdPic" />
+        <result column="album_ylt_fourth_pic" property="albumYltFourthPic" />
+        <result column="album_ylt_fifth_pic" property="albumYltFifthPic" />
+        <result column="create_time" property="createTime" />
+        <result column="update_time" property="updateTime" />
+        <result column="source" property="source" />
+        <result column="idemand" property="idemand" />
+        <result column="sname" property="sname" />
+        <result column="excl" property="excl" />
+        <result column="otype" property="otype" />
+        <result column="ep_isDown" property="epIsDown" />
+        <result column="ep_isTvod" property="epIsTvod" />
+        <result column="ep_isVip" property="epIsVip" />
+        <result column="is_tvod" property="isTvod" />
+        <result column="ep_isPkg" property="epIsPkg" />
+        <result column="aqy_is_vip" property="aqyIsVip" />
+        <result column="is_coupon" property="isCoupon" />
+        <result column="ep_isCoupon" property="epIsCoupon" />
+        <result column="is_pkg" property="isPkg" />
+        <result column="up_time" property="upTime" />
+        <result column="down_time" property="downTime" />
+        <result column="s_type" property="sType" />
+        <result column="ep_orgPrc" property="epOrgPrc" />
+        <result column="ep_validTime" property="epValidTime" />
+        <result column="orgPrc" property="orgPrc" />
+        <result column="validTime" property="validTime" />
+    </resultMap>
+    <resultMap id="newContentChanApiMap" type="cn.com.hiveview.entity.module.portal.NewContentChanVo">
+        <id column="id" property="Id" />
+        <result column="programset_id" property="programsetId" />
+        <result column="album_name" property="albumName" />
+        <result column="chn_id" property="chnId" />
+    </resultMap>
+    <sql id="findPageWhere">
+        <where>
+            1 = 1
+            <if test="isEffective != null and isEffective != ''">
+                AND is_effective= #{isEffective}
+            </if>
+            <if test="programsetId != null and programsetId != ''">
+                AND programset_id= #{programsetId}
+            </if>
+            <if test="albumName != null and albumName !=''">
+                AND album_name LIKE CONCAT ('%',#{albumName},'%')
+            </if>
+            <if test="aqyId != null and aqyId !=''">
+                AND aqy_id is not null
+            </if>
+            <if test="jqId != null and jqId !=''">
+                AND jq_id is not null
+            </if>
+            <if test="thirdId != null and thirdId !=''">
+                AND third_id is not null
+            </if>
+            <if test="hkdbId != null and hkdbId != ''">
+                AND hkdb_id is not null
+            </if>
+            <if test="status != null and status != ''">
+                AND status = #{status}
+            </if>
+            <if test="templetId != null and templetId != ''">
+                AND templet_id = #{templetId}
+            </if>
+            <if test="apkId != null and apkId != ''">
+                AND apk_id = #{apkId}
+            </if>
+            <if test=" chnId != null">
+                AND chn_id = #{chnId}
+            </if>
+            <if test=" chnType != null">
+                AND chn_type = #{chnType}
+            </if>
+            <if test="apkBagName != null and apkBagName != ''">
+                AND apk_bag_name = #{apkBagName}
+            </if>
+            <choose>
+                <when test="isVip != null and isVip !='' and isVip == 3">
+                    AND is_vip != 1 and aqy_is_vip !=1
+                </when>
+                <when test="isVip != null and isVip !='' and isVip != 3">
+                    AND is_vip = #{isVip}
+                </when>
+            </choose>
+            <if test="aqyIsVip != null and aqyIsVip !=''">
+                AND aqy_is_vip = #{aqyIsVip}
+            </if>
+            <if test="isTvod != null and isTvod !=''">
+                AND is_tvod = #{isTvod}
+            </if>
+            <choose>
+                <when test="chargingType != null and chargingType !='' and chargingType == 3">
+                    AND charging_type != 1 and is_tvod !=1
+                </when>
+                <when test="chargingType != null and chargingType !='' and chargingType != 3">
+                    AND charging_type = #{chargingType}
+                </when>
+            </choose>
+        </where>
+    </sql>
+    <select id="getPageList" resultMap="newContentChanMap"
+            parameterType="cn.com.hiveview.launcherapi.module.portal.condition.NewContentChanCondition">
+        select programset_id,album_name,album_hb_pic,album_xqy_pic,album_x_pic,album_slt_pic,aqy_id,jq_id,third_id,hkdb_id,aqy_is_effective,jq_is_effective,third_is_effective,hkdb_is_effective,is_effective,status,apk_bag_name,pre_m3u8,chn_id,chn_name,chn_type,is_vip,charging_type,aqy_is_vip,is_tvod,focus
+        FROM new_content_chan ncc
+        <include refid="findPageWhere"/>
+        order by ncc.up_time desc
+        <if test="pageIndex >= 0 and pageSize >= 1">
+            LIMIT #{ pageIndex }, #{ pageSize }
+        </if>
+    </select>
+    <select id="getPageCount" resultType="Integer" parameterType="cn.com.hiveview.launcherapi.module.portal.condition.NewContentChanCondition">
+        select COUNT(1) FROM new_content_chan
+        <include refid="findPageWhere"/>
+    </select>
+    <select id="get" resultMap="newContentChanMap"
+            parameterType="cn.com.hiveview.launcherapi.module.portal.condition.NewContentChanCondition">
+        select programset_id,album_name,album_hb_pic,album_xqy_pic,album_x_pic,album_slt_pic,aqy_id,jq_id,third_id,
+        hkdb_id,aqy_is_effective,jq_is_effective,third_is_effective,hkdb_is_effective,is_effective,status,
+        apk_bag_name,pre_m3u8,chn_id,chn_type,templet_id,aqy_is_vip FROM new_content_chan
+        <include refid="findPageWhere"/>
+
+    </select>
+
+    <select id="getDataGroupList" resultMap="newContentChanMap" parameterType="cn.com.hiveview.launcherapi.module.portal.condition.NewContentChanCondition">
+        select programset_id,album_name,album_hb_pic,album_xqy_pic,album_x_pic,album_slt_pic,aqy_id,jq_id,third_id,
+            hkdb_id,aqy_is_effective,jq_is_effective,third_is_effective,hkdb_is_effective,is_effective,status,
+            apk_bag_name,pre_m3u8,chn_id,chn_type,templet_id,aqy_is_vip FROM new_content_chan
+        WHERE programset_id IN
+        <foreach collection="programsetIdList" index="index" item="item"
+                 open="(" separator="," close=")">
+            #{item}
+        </foreach>
+        AND status = #{status}
+        AND apk_bag_name = #{apkBagName}
+    </select>
+
+    <select id="getList" resultMap="newContentChanApiMap"
+            parameterType="cn.com.hiveview.launcherapi.module.portal.condition.NewContentChanCondition">
+        select programset_id,chn_id,album_name FROM new_content_chan
+        where programset_id in (#{albumName}) and status =1 and apk_bag_name ='com.hiveview.cloudscreen.vipvideo'
+    </select>
+
+    <select id="getPageListByPremiere" resultMap="newContentChanMap"
+            parameterType="cn.com.hiveview.launcherapi.module.portal.condition.NewContentChanCondition">
+        select ncc.programset_id,ncc.album_name,ncc.album_hb_pic,ncc.album_xqy_pic,ncc.album_x_pic,ncc.album_slt_pic,ncc.aqy_id,ncc.jq_id,ncc.third_id,
+        ncc.hkdb_id,ncc.aqy_is_effective,ncc.jq_is_effective,ncc.third_is_effective,ncc.hkdb_is_effective,ncc.is_effective,ncc.status,ncc.apk_bag_name,
+        ncc.pre_m3u8,ncc.chn_id,ncc.chn_name,ncc.chn_type,ncc.is_vip,ncc.charging_type,ncc.aqy_is_vip,ncc.is_tvod,ncc.focus
+        FROM new_content_chan ncc INNER JOIN new_content_hot nch ON ncc.programset_id = nch.content_id AND nch.content_type = 1 AND nch.apk_bag_name = #{apkBagName}
+        <where>
+            <if test="hotId != null">
+                AND nch.hot_id = #{hotId}
+            </if>
+            <if test="programsetId != null and programsetId != ''">
+                AND ncc.programset_id= #{programsetId}
+            </if>
+            <if test="albumName != null and albumName !=''">
+                AND ncc.album_name LIKE CONCAT ('%',#{albumName},'%')
+            </if>
+            <if test="status != null and status != ''">
+                AND ncc.status = #{status}
+            </if>
+            <if test="templetId != null and templetId != ''">
+                AND ncc.templet_id = #{templetId}
+            </if>
+            <if test="apkId != null and apkId != ''">
+                AND ncc.apk_id = #{apkId}
+            </if>
+            <if test=" chnId != null">
+                AND ncc.chn_id = #{chnId}
+            </if>
+            <if test=" chnType != null">
+                AND ncc.chn_type = #{chnType}
+            </if>
+            <if test="apkBagName != null and apkBagName != ''">
+                AND ncc.apk_bag_name = #{apkBagName}
+            </if>
+            <if test="aqyIsVip != null and aqyIsVip !=''">
+                AND ncc.aqy_is_vip = #{aqyIsVip}
+            </if>
+            <if test="isTvod != null and isTvod !=''">
+                AND ncc.is_tvod = #{isTvod}
+            </if>
+            <choose>
+                <when test="isVip != null and isVip !='' and isVip == 3">
+                    AND ncc.is_vip != 1 and aqy_is_vip !=1
+                </when>
+                <when test="isVip != null and isVip !='' and isVip != 3">
+                    AND ncc.is_vip = #{isVip}
+                </when>
+            </choose>
+            <choose>
+                <when test="chargingType != null and chargingType !='' and chargingType == 3">
+                    AND ncc.charging_type != 1 and is_tvod !=1
+                </when>
+                <when test="chargingType != null and chargingType !='' and chargingType != 3">
+                    AND ncc.charging_type = #{chargingType}
+                </when>
+            </choose>
+        </where>
+        <if test="pageIndex >= 0 and pageSize >= 1">
+            LIMIT #{ pageIndex }, #{ pageSize }
+        </if>
+    </select>
+
+    <select id="getCountByPremiere" resultType="Integer"
+            parameterType="cn.com.hiveview.launcherapi.module.portal.condition.NewContentChanCondition">
+        select count(ncc.id)
+        FROM new_content_chan ncc INNER JOIN new_content_hot nch ON ncc.programset_id = nch.content_id AND nch.content_type = 1 AND nch.apk_bag_name = #{apkBagName}
+        <where>
+            <if test="hotId != null">
+                AND nch.hot_id = #{hotId}
+            </if>
+            <if test="programsetId != null and programsetId != ''">
+                AND ncc.programset_id= #{programsetId}
+            </if>
+            <if test="albumName != null and albumName !=''">
+                AND ncc.album_name LIKE CONCAT ('%',#{albumName},'%')
+            </if>
+            <if test="status != null and status != ''">
+                AND ncc.status = #{status}
+            </if>
+            <if test="templetId != null and templetId != ''">
+                AND ncc.templet_id = #{templetId}
+            </if>
+            <if test="apkId != null and apkId != ''">
+                AND ncc.apk_id = #{apkId}
+            </if>
+            <if test=" chnId != null">
+                AND ncc.chn_id = #{chnId}
+            </if>
+            <if test=" chnType != null">
+                AND ncc.chn_type = #{chnType}
+            </if>
+            <if test="apkBagName != null and apkBagName != ''">
+                AND ncc.apk_bag_name = #{apkBagName}
+            </if>
+            <if test="aqyIsVip != null and aqyIsVip !=''">
+                AND ncc.aqy_is_vip = #{aqyIsVip}
+            </if>
+            <if test="isTvod != null and isTvod !=''">
+                AND ncc.is_tvod = #{isTvod}
+            </if>
+            <choose>
+                <when test="isVip != null and isVip !='' and isVip == 3">
+                    AND ncc.is_vip != 1 and aqy_is_vip !=1
+                </when>
+                <when test="isVip != null and isVip !='' and isVip != 3">
+                    AND ncc.is_vip = #{isVip}
+                </when>
+            </choose>
+            <choose>
+                <when test="chargingType != null and chargingType !='' and chargingType == 3">
+                    AND ncc.charging_type != 1 and is_tvod !=1
+                </when>
+                <when test="chargingType != null and chargingType !='' and chargingType != 3">
+                    AND ncc.charging_type = #{chargingType}
+                </when>
+            </choose>
+        </where>
+    </select>
+
+
+</mapper>

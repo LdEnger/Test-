@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.com.hiveview.launcherapi.module.portal.mapper.PortalSpeGroupMapper">
+    <select id="getPageList" parameterType="cn.com.hiveview.launcherapi.module.portal.condition.PortalSpeGroupCondition" resultType="cn.com.hiveview.launcherapi.module.portal.condition.PortalSpeGroupCondition">
+        SELECT id,spe_group_name AS speGroupName,spe_group_title AS speGroupTitle,DATE_FORMAT(create_time,'%Y-%m-%d %H:%i:%s') As createTime
+        FROM portal_spe_group
+        <where>
+            <if test="speGroupName!=null and speGroupName!=''">
+                spe_group_name LIKE CONCAT ('%',#{speGroupName},'%')
+            </if>
+        </where>
+        <if test="pageSize != null">
+            limit #{pageIndex}, #{pageSize}
+        </if>
+    </select>
+    <select id="getCount" parameterType="cn.com.hiveview.launcherapi.module.portal.condition.PortalSpeGroupCondition" resultType="integer">
+        SELECT COUNT(id) FROM portal_spe_group
+        <where>
+            <if test="speGroupName!=null and speGroupName!=''">
+                spe_group_name LIKE CONCAT ('%',#{speGroupName},'%')
+            </if>
+        </where>
+    </select>
+</mapper>

@@ -1,0 +1,237 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.com.hiveview.launcherapi.module.portal.mapper.PortalScreentRecommendContentMapper">
+    <resultMap id="portalScreentRecommendContentMap" type="cn.com.hiveview.entity.module.portal.PortalScreentRecommendContent">
+        <id column="id" property="id"/>
+        <result column="belong_recomend_id" property="belongRecomendId"/>
+        <result column="title" property="title"/>
+        <result column="second_title" property="secondTitle"/>
+        <result column="is_play" property="isPlay"/>
+        <result column="content_type" property="contentType"/>
+        <result column="content_id" property="contentId"/>
+        <result column="position" property="position"/>
+        <result column="seq" property="seq"/>
+        <result column="is_use_app" property="isUseApp"/>
+        <result column="content_focus" property="contentFocus"/>
+        <result column="recommend_name" property="recommendName"/>
+        <result column="apk_name" property="apkName"/>
+        <result column="content_img" property="contentImg"/>
+        <result column="content_update" property="contentUpdate"/>
+        <result column="content_total" property="contentTotal"/>
+        <result column="is_txt_show" property="isTxtShow"/>
+        <result column="is_effective" property="isEffective"/>
+        <result column="album_stream" property="albumStream"/>
+        <result column="videoset_stream" property="videosetStream"/>
+        <result column="cname" property="cname"/>
+        <result column="cid" property="cid"/>
+        <result column="album_type" property="albumType"/>
+        <result column="big_pic" property="bigPic"/>
+        <result column="templet_id" property="templetId"/>
+        <result column="hot_word_id" property="hotWordId"/>
+        <result column="is_pay" property="isPay"/>
+        <result column="qiyi_vip" property="qiyiVip"/>
+        <result column="is_vip" property="isVip"/>
+        <result column="qiyi_pay" property="qiyiPay"/>
+        <result column="qiyi_effective" property="qiyiEffective"/>
+        <result column="jq_effective" property="jqEffective"/>
+        <result column="content_name" property="contentName"/>
+        <result column="image_type" property="imageType"/>
+    </resultMap>
+    <insert id="add" parameterType="cn.com.hiveview.launcherapi.module.portal.condition.PortalScreentRecommendContentCondition">
+        insert into portal_screent_recommend_content (belong_recomend_id,title,second_title,is_play,content_id,big_Pic,apk_name,content_type,image_type,templet_id,content_name,seq,cid,c_type,hot_word_id,is_vip,qiyi_vip,is_pay,qiyi_pay,content_img) values (#{belongRecomendId},#{title},#{secondTitle},#{isPlay},#{contentId},#{bigPic},#{apkName},#{contentType},#{imageType},#{templetId},#{contentName},#{seq},#{cid},#{cType},#{hotWordId},#{isVip},#{qiyiVip},#{isPay},#{qiyiPay},#{contentImg})
+    </insert>
+    <select id="getPageList" resultMap="portalScreentRecommendContentMap"
+            parameterType="cn.com.hiveview.launcherapi.module.portal.condition.PortalScreentRecommendContentCondition">
+        select * FROM portal_screent_recommend_content where is_effective=1
+        <if test="contentName != null and contentName != ''">
+            and content_name  like CONCAT('%','${contentName}','%' )
+        </if>
+        <if test="belongRecomendId != null">
+            and belong_recomend_id = #{belongRecomendId}
+        </if>
+        <if test="imageType != null">
+            and image_type = #{imageType}
+        </if>
+        <if test="recommendName != null and recommendName != ''">
+            and recommend_name  like CONCAT('%','${recommendName}','%' )
+        </if>
+        ORDER BY seq
+        <if test="pageSize != null">
+            limit #{pageIndex}, #{pageSize}
+        </if>
+    </select>
+    <select id="getPageCount" resultType="Integer" parameterType="cn.com.hiveview.launcherapi.module.portal.condition.PortalScreentRecommendContentCondition">
+        select COUNT(1) FROM portal_screent_recommend_content where is_effective=1
+        <if test="contentName != null and contentName != ''">
+            and content_name  like CONCAT('%','${contentName}','%' )
+        </if>
+        <if test="belongRecomendId != null">
+            and belong_recomend_id = #{belongRecomendId}
+        </if>
+        <if test="imageType != null">
+            and image_type = #{imageType}
+        </if>
+        <if test="recommendName != null and recommendName != ''">
+            and recommend_name  like CONCAT('%','${recommendName}','%' )
+        </if>
+    </select>
+    <delete id="delete" parameterType="cn.com.hiveview.launcherapi.module.portal.condition.PortalScreentRecommendContentCondition">
+        DELETE FROM
+        portal_screent_recommend_content
+        <where>
+            <if test="id != null">
+                AND id= #{id}
+            </if>
+        </where>
+
+    </delete>
+    <update id="update" parameterType="cn.com.hiveview.launcherapi.module.portal.condition.PortalScreentRecommendContentCondition">
+        UPDATE portal_screent_recommend_content
+        <set>
+            <if test="recommendName != null and recommendName != ''">
+                recommend_name = #{recommendName},
+            </if>
+            <if test="title != null">
+                title = #{title},
+            </if>
+            <if test="secondTitle != null">
+                second_title = #{secondTitle},
+            </if>
+            <if test="isPlay != null">
+                is_play = #{isPlay},
+            </if>
+            <if test="bigPic != null">
+                big_pic = #{bigPic},
+            </if>
+            <if test="contentType != null">
+                content_type = #{contentType},
+            </if>
+            <if test="contentId != null">
+                content_id = #{contentId},
+            </if>
+            <if test="seq != null">
+                seq = #{seq},
+            </if>
+            <if test="contentName != null">
+                content_name = #{contentName},
+            </if>
+            <if test="cid != null">
+            cid = #{cid},
+            </if>
+            <if test="cType != null">
+                c_type = #{cType},
+            </if>
+            <if test="isVip != null">
+                is_vip = #{isVip},
+            </if>
+            <if test="isPay != null">
+                is_pay = #{isPay},
+            </if>
+            <if test="qiyiVip != null">
+                qiyi_vip = #{qiyiVip},
+            </if>
+            <if test="qiyiPay != null">
+                qiyi_pay = #{qiyiPay},
+            </if>
+            <if test="hotWordId != null">
+                hot_word_id = #{hotWordId},
+            </if>
+            <if test="templetId != null">
+                templet_id = #{templetId},
+            </if>
+            <if test="apkName != null">
+                apk_name = #{apkName},
+            </if>
+            <if test="contentImg != null">
+                content_img = #{contentImg},
+            </if>
+        </set>
+        WHERE id=#{id}
+    </update>
+    <select id="getMaxSeq" resultType="Integer" parameterType="cn.com.hiveview.launcherapi.module.portal.condition.PortalScreentRecommendContentCondition">
+        SELECT MAX(seq) FROM portal_screent_recommend_content WHERE 1=1
+        <if test="belongRecomendId != null">
+            AND belong_recomend_id=#{belongRecomendId}
+        </if>
+        <if test="imageType != null">
+            AND image_type=#{imageType}
+        </if>
+    </select>
+    <select id="getMinSeq" resultType="Integer" parameterType="cn.com.hiveview.launcherapi.module.portal.condition.PortalScreentRecommendContentCondition">
+        SELECT MIN(seq) FROM portal_screent_recommend_content WHERE 1=1
+        <if test="belongRecomendId != null">
+            AND belong_recomend_id=#{belongRecomendId}
+        </if>
+        <if test="imageType != null">
+            AND image_type=#{imageType}
+        </if>
+    </select>
+    <select id="getMinContent" resultType="cn.com.hiveview.entity.module.portal.PortalScreentRecommendContent" parameterType="cn.com.hiveview.launcherapi.module.portal.condition.PortalScreentRecommendContentCondition">
+        SELECT id,seq from portal_screent_recommend_content WHERE ( seq &lt; #{seq}
+        OR seq=(SELECT MIN(seq) FROM portal_screent_recommend_content WHERE 1=1
+            <if test="belongRecomendId != null">
+                AND belong_recomend_id=#{belongRecomendId}
+            </if>
+            <if test="imageType != null">
+                AND image_type=#{imageType}
+            </if>
+        ) )
+        <if test="belongRecomendId != null">
+            AND belong_recomend_id=#{belongRecomendId}
+        </if>
+        <if test="imageType != null">
+            AND image_type=#{imageType}
+        </if>
+        ORDER BY seq DESC limit 1
+    </select>
+
+    <select id="getMaxContent" resultType="cn.com.hiveview.entity.module.portal.PortalScreentRecommendContent" parameterType="cn.com.hiveview.launcherapi.module.portal.condition.PortalScreentRecommendContentCondition">
+        SELECT id,seq from portal_screent_recommend_content WHERE ( seq &gt; #{seq}
+        OR seq=(SELECT MAX(seq) FROM portal_screent_recommend_content WHERE 1=1
+            <if test="belongRecomendId != null">
+                AND belong_recomend_id=#{belongRecomendId}
+            </if>
+            <if test="imageType != null">
+                AND image_type=#{imageType}
+            </if>
+        ) )
+        <if test="belongRecomendId != null">
+            AND belong_recomend_id=#{belongRecomendId}
+        </if>
+        <if test="imageType != null">
+            AND image_type=#{imageType}
+        </if>
+        ORDER BY seq ASC limit 1
+    </select>
+    <!-- 判断是否存在-->
+    <select id="getHasList" resultMap="portalScreentRecommendContentMap"
+            parameterType="cn.com.hiveview.launcherapi.module.portal.condition.PortalScreentRecommendContentCondition">
+        select * FROM portal_screent_recommend_content where 1=1
+        <if test="belongRecomendId != null">
+            and belong_recomend_id = #{belongRecomendId}
+        </if>
+        <if test="imageType != null">
+            and image_type = #{imageType}
+        </if>
+        <if test="contentId != null">
+            and content_id =#{contentId}
+        </if>
+        <if test="contentType != null">
+            and content_type =#{contentType}
+        </if>
+    </select>
+
+
+    <select id="getBigPic" parameterType="cn.com.hiveview.launcherapi.module.portal.condition.PortalScreentRecommendContentCondition" resultType="Integer">
+        SELECT COUNT(1)
+        FROM portal_screent_recommend_content
+        WHERE
+         1 = 1
+          <if test="contentId != null">
+              AND  content_id = #{contentId}
+          </if>
+          <if test="contentType != null">
+              AND content_type = #{contentType}
+          </if>
+    </select>
+</mapper>

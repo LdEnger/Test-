@@ -1,0 +1,240 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.com.hiveview.launcherapi.module.portal.mapper.AppMapper">
+    <resultMap id="AppMap" type="cn.com.hiveview.entity.module.portal.AppVo">
+        <id column="app_id" property="appId" />
+        <result column="app_name" property="appName" />
+        <result column="app_icon" property="appIcon" />
+        <result column="app_long_icon" property="appLongIcon" />
+        <result column="app_describe" property="appDescribe" />
+        <result column="bundle_id" property="bundleId" />
+        <result column="tag_name" property="tagName" />
+        <result column="tag_info" property="tagInfo" />
+        <result column="seq" property="seq" />
+        <result column="state" property="state" />
+        <result column="create_time" property="createTime" />
+        <result column="update_time" property="updateTime" />
+        <result column="app_type" property="appType" />
+        <result column="latest_version" property="latestVersion" />
+        <result column="is_pay" property="isPay" />
+        <result column="py_name" property="pyName" />
+        <result column="usb_device" property="usbDevice" />
+        <result column="category_id" property="categoryId" />
+        <result column="downloads" property="downloads" />
+        <result column="platform" property="platform" />
+        <result column="developer" property="developer" />
+        <result column="developer_id" property="developerId" />
+        <result column="app_video" property="appVideo" />
+    </resultMap>
+
+    <select id="getList" parameterType="cn.com.hiveview.launcherapi.module.portal.condition.AppCondition" resultMap="AppMap">
+        SELECT
+        app_id,
+        app_name,
+        app_icon,
+        app_long_icon,
+        app_describe,
+        bundle_id,
+        tag_name,
+        tag_info,
+        seq,
+        state,
+        create_time,
+        DATE_FORMAT(update_time,'%Y-%m-%d %H:%i:%s') As update_time,
+        app_type,
+        latest_version,
+        is_pay,
+        py_name,
+        usb_device,
+        category_id,
+        developer,
+        developer_id,
+        downloads,
+        platform,
+        app_video
+        FROM app
+        <where>
+            <if test="appId != null">
+                AND app_id = #{appId}
+            </if>
+            <if test="appName != null and appName != ''">
+                app_name LIKE CONCAT ('%',#{appName},'%')
+            </if>
+            <if test="state != null">
+                AND state = #{state}
+            </if>
+            <if test="isPay != null">
+                AND is_pay = #{isPay}
+            </if>
+            <if test="appType != null">
+                AND app_type = #{appType}
+            </if>
+            <if test="categoryId != null">
+                AND category_id = #{categoryId}
+            </if>
+            <if test="platform!=null and platform == 0">
+                AND platform != 1
+            </if>
+            <if test="platform!=null and platform == 1">
+                AND platform != 0
+            </if>
+        </where>
+        ORDER BY
+        create_time desc
+        <if test="pageIndex >= 0 and pageSize >= 1">
+            LIMIT #{pageIndex}, #{pageSize}
+        </if>
+
+    </select>
+    <select id="getCount" resultType="Integer" parameterType="cn.com.hiveview.launcherapi.module.portal.condition.AppCondition">
+        SELECT count(app_id)
+        FROM app
+        <where>
+            <if test="appId != null">
+                AND app_id = #{appId}
+            </if>
+            <if test="appName != null and appName != ''">
+                app_name LIKE CONCAT ('%',#{appName},'%')
+            </if>
+            <if test="state != null">
+                AND state = #{state}
+            </if>
+            <if test="isPay != null">
+                AND is_pay = #{isPay}
+            </if>
+            <if test="appType != null">
+                AND app_type = #{appType}
+            </if>
+            <if test="categoryId != null">
+                AND category_id = #{categoryId}
+            </if>
+            <if test="platform!=null and platform == 0">
+                AND platform != 1
+            </if>
+            <if test="platform!=null and platform == 1">
+                AND platform != 0
+            </if>
+        </where>
+        ORDER BY
+        seq ASC
+    </select>
+
+    <select id="get" parameterType="cn.com.hiveview.launcherapi.module.portal.condition.AppCondition" resultMap="AppMap">
+        SELECT
+        app_id,
+        app_name,
+        app_icon,
+        app_long_icon,
+        app_describe,
+        bundle_id,
+        tag_name,
+        tag_info,
+        seq,
+        state,
+        create_time,
+        DATE_FORMAT(update_time,'%Y-%m-%d %H:%i:%s') As update_time,
+        app_type,
+        latest_version,
+        is_pay,
+        py_name,
+        usb_device,
+        category_id,
+        developer,
+        developer_id,
+        downloads,
+        platform,
+        app_video
+        FROM app
+        <where>
+            <if test="appId != null">
+                AND app_id = #{appId}
+            </if>
+            <if test="appName != null and appName != ''">
+                app_name LIKE CONCAT ('%',#{appName},'%')
+            </if>
+            <if test="state != null">
+                AND state = #{state}
+            </if>
+            <if test="isPay != null">
+                AND is_pay = #{isPay}
+            </if>
+            <if test="appType != null">
+                AND app_type = #{appType}
+            </if>
+            <if test="categoryId != null">
+                AND category_id = #{categoryId}
+            </if>
+            <if test="platform!=null and platform == 0">
+                AND platform != 1
+            </if>
+            <if test="platform!=null and platform == 1">
+                AND platform != 0
+            </if>
+        </where>
+       limit 1
+
+    </select>
+
+    <select id="getDataGroupList" parameterType="cn.com.hiveview.launcherapi.module.portal.condition.AppCondition" resultMap="AppMap">
+        SELECT
+        app_id,
+        app_name,
+        app_icon,
+        app_long_icon,
+        app_describe,
+        bundle_id,
+        tag_name,
+        tag_info,
+        seq,
+        state,
+        create_time,
+        DATE_FORMAT(update_time,'%Y-%m-%d %H:%i:%s') As update_time,
+        app_type,
+        latest_version,
+        is_pay,
+        py_name,
+        usb_device,
+        category_id,
+        developer,
+        developer_id,
+        downloads,
+        platform,
+        app_video
+        FROM app
+        <where>
+            <if test="appId != null">
+                AND app_id = #{appId}
+            </if>
+            <if test="appName != null and appName != ''">
+                app_name LIKE CONCAT ('%',#{appName},'%')
+            </if>
+            <if test="state != null">
+                AND state = #{state}
+            </if>
+            <if test="isPay != null">
+                AND is_pay = #{isPay}
+            </if>
+            <if test="appType != null">
+                AND app_type = #{appType}
+            </if>
+            <if test="categoryId != null">
+                AND category_id = #{categoryId}
+            </if>
+            <if test="platform!=null and platform == 0">
+                AND platform != 1
+            </if>
+            <if test="platform!=null and platform == 1">
+                AND platform != 0
+            </if>
+
+            <if test="appIds != null">
+                AND app_id IN
+                <foreach collection="appIds" index="index" item="item" open="(" separator="," close=")">
+                  #{item}
+                </foreach>
+            </if>
+
+        </where>
+    </select>
+
+</mapper>

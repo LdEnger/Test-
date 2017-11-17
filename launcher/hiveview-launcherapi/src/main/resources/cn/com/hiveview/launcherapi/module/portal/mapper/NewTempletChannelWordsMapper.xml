@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.com.hiveview.launcherapi.module.portal.mapper.NewTempletChannelWordsMapper">
+    <resultMap id="newTmpletChannelMap" type="cn.com.hiveview.entity.module.portal.NewTempletChannelWordsListVo">
+        <id column="id" property="id"/>
+        <result column="type" property="type"/>
+        <result column="apk_id" property="apkId"/>
+        <result column="templet_id" property="templetId"/>
+        <result column="apk_channel_id" property="apkChannelId"/>
+        <result column="apk_channel_type" property="apkChannelType"/>
+        <result column="name" property="name"/>
+        <result column="seq" property="seq"/>
+        <result column="is_effective" property="isEffective"/>
+        <result column="combox_id" property="comboxId"/>
+        <result column="create_time" property="createTime"/>
+       <result column="update_time" property="updateTime"/>
+        <result column="apk_bag_name" property="apkBagName"/>
+        <result column="apkId" property="hotId"/>
+    </resultMap>
+
+    <sql id="newTempletColumn">
+        <![CDATA[id,type,apk_id,templet_id,apk_channel_id,apk_channel_type,name,seq,is_effective,combox_id,create_time,update_time,apk_bag_name]]>
+    </sql>
+    <select id="getPage" resultMap="newTmpletChannelMap" parameterType="cn.com.hiveview.launcherapi.module.portal.condition.NewTmpletChannelWordsCondition">
+       SELECT
+        w.id, w.name, w.apk_channel_id,COUNT(h.id) as apkId
+        FROM
+        new_templet_channel_words AS w
+        LEFT  JOIN
+        new_content_hot AS h
+        ON
+        h.hot_id = w.id
+        <where>
+            <if test="name != null and name != ''">
+                and w.name like CONCAT('%',#{name},'%')
+            </if>
+            <if test="apkBagName != null">
+                AND w.apk_bag_name = #{apkBagName}
+            </if>
+
+            <if test="apkChannelId != null">
+                AND w.apk_channel_id = #{apkChannelId}
+            </if>
+           and  w.name NOT LIKE  '全部%'
+            and w.is_effective = 2
+            AND  h.status = 1
+        </where>
+        GROUP  BY w.id
+        <if test="pageIndex != null and pageSize != null">
+            limit #{pageIndex},#{pageSize}
+        </if>
+    </select>
+
+    <select id="getCount" parameterType="cn.com.hiveview.launcherapi.module.portal.condition.NewTmpletChannelWordsCondition" resultType="Integer">
+        SELECT  COUNT(1) from (SELECT
+        count(1)
+        FROM
+        new_templet_channel_words AS w
+        LEFT  JOIN
+        new_content_hot AS h
+        ON
+        h.hot_id = w.id
+        <where>
+            <if test="name != null and name != ''">
+                and w.name like CONCAT('%',#{name},'%')
+            </if>
+            <if test="apkBagName != null">
+                AND w.apk_bag_name = #{apkBagName}
+            </if>
+            <if test="apkChannelId != null">
+                AND w.apk_channel_id = #{apkChannelId}
+            </if>
+            and  w.name NOT LIKE  '全部%'
+            and w.is_effective = 2
+            AND  h.status = 1
+        </where>
+        GROUP  BY w.id) t
+    </select>
+
+
+
+            <select id="getPageList" resultMap="newTmpletChannelMap" parameterType="cn.com.hiveview.launcherapi.module.portal.condition.NewTmpletChannelWordsCondition">
+                        SELECT
+                        w.id, w.name,w.apk_channel_id,COUNT(h.id) as apkId
+                        FROM
+                        new_templet_channel_words AS w
+                        LEFT  JOIN
+                        new_content_hot AS h
+                        ON
+                        h.hot_id = w.id
+            <where>
+                <if test="name != null and name != ''">
+                    and w.name like CONCAT('%',#{name},'%')
+                </if>
+                <if test="apkBagName != null">
+                    AND w.apk_bag_name = #{apkBagName}
+                </if>
+                and  w.name NOT LIKE  '全部%'
+                and w.is_effective = 2
+                AND  h.status = 1
+            </where>
+            GROUP  BY w.id
+            <if test="pageIndex != null and pageSize != null">
+                limit #{pageIndex},#{pageSize}
+            </if>
+            </select>
+    <select id="getApkCount" parameterType="cn.com.hiveview.launcherapi.module.portal.condition.NewTmpletChannelWordsCondition" resultType="Integer">
+        SELECT COUNT(1) FROM (
+        SELECT
+        COUNT(1)
+        FROM
+        new_templet_channel_words AS w
+        LEFT  JOIN
+        new_content_hot AS h
+        ON
+        h.hot_id = w.id
+        <where>
+            <if test="name != null and name != ''">
+                and w.name like CONCAT('%',#{name},'%')
+            </if>
+            <if test="apkBagName != null">
+                AND w.apk_bag_name = #{apkBagName}
+            </if>
+            and  w.name NOT LIKE  '全部%'
+            and w.is_effective = 2
+            AND  h.status = 1
+        </where>
+        GROUP  BY w.id ) z
+    </select>
+</mapper>

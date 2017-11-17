@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.com.hiveview.launcherapi.module.portal.mapper.CompositeSubjectMapper">
+    <resultMap id="compositeSubjectMap" type="cn.com.hiveview.entity.module.portal.CompositeSubjectList">
+        <id column="subject_id" property="subjectId" />
+        <result column="subject_name" property="subjectName" />
+        <result column="subject_hor_pic" property="subjectHorPic" />
+        <result column="subject_desc" property="subjectDesc" />
+        <result column="subject_hor_bg_img" property="subjectHorBgImg" />
+        <result column="img_size" property="imgSize" />
+        <result column="subject_size" property="subjectSize" />
+        <result column="seq" property="seq" />
+        <result column="is_online" property="isOnline" />
+        <result column="create_time" property="createTime" />
+        <result column="update_time" property="updateTime" />
+        <result column="template_id" property="templateId" />
+        <result column="apk_name" property="apkName" />
+        <result column="apk_bag_name" property="apkBagName" />
+        <result column="subject_ver_pic" property="subjectVerPic" />
+    </resultMap>
+    <sql id="baseColumns">
+        <![CDATA[
+	    	subject_id,subject_name,subject_hor_pic,subject_ver_pic,subject_desc,
+	    	subject_ver_bg_img,subject_hor_bg_img,img_size,subject_size,seq,is_online,
+	    	create_time,update_time,is_vip,template_id,apk_name,apk_bag_name
+	    ]]>
+    </sql>
+    <sql id="findPageWhere">
+        <where>
+            <if test="subjectId != null">
+                AND subject_id = #{subjectId}
+            </if>
+            <if test="subjectName != null and subjectName != ''">
+                AND subject_name like CONCAT('%','${subjectName}','%' )
+            </if>
+            <if test="subjectDesc != null and subjectDesc != ''">
+                AND subject_desc like CONCAT('%','${subjectDesc}','%' )
+            </if>
+            <if test="imgSize != null and imgSize != ''">
+                AND img_size like CONCAT('%','${imgSize}','%' )
+            </if>
+            <if test="subjectSize != null">
+                AND subject_size = #{subjectSize}
+            </if>
+            <if test="seq != null">
+                AND seq = #{seq}
+            </if>
+            <if test="isOnline != null">
+                AND is_online = #{isOnline}
+            </if>
+            <if test="apkBagName != null and apkBagName != ''">
+                AND apk_bag_name = #{apkBagName}
+            </if>
+            <if test="templateId != null">
+                AND template_id = #{templateId}
+            </if>
+        </where>
+    </sql>
+    <select id="getPageList" resultMap="compositeSubjectMap"
+            parameterType="cn.com.hiveview.launcherapi.module.portal.condition.CompositeSubjectCondition">
+        SELECT
+        <include refid="baseColumns" />
+        FROM
+        new_composite_subject
+        <include refid="findPageWhere"/>
+        ORDER BY create_time desc
+        <if test="pageIndex >= 0 and pageSize >= 1">
+            LIMIT #{ pageIndex }, #{ pageSize }
+        </if>
+    </select>
+    <select id="getPageCount" resultType="Integer" parameterType="cn.com.hiveview.launcherapi.module.portal.condition.CompositeSubjectCondition">
+        SELECT
+        count(1)
+        FROM
+        new_composite_subject
+        <include refid="findPageWhere" />
+    </select>
+</mapper>

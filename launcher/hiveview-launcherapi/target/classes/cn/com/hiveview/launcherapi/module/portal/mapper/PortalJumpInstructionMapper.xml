@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.com.hiveview.launcherapi.module.portal.mapper.PortalJumpInstructionMapper">
+
+    <sql id="selJumpInstruction">SELECT id,type,action_name AS actionName ,effective
+        FROM portal_jump_instruction
+    </sql>
+    <!--整页数据-->
+    <select id="getPageList" parameterType="cn.com.hiveview.launcherapi.module.portal.condition.PortalJumpInstructionCondition"  resultType="cn.com.hiveview.launcherapi.module.portal.condition.PortalJumpInstructionCondition">
+      <include refid="selJumpInstruction"/>
+          <where>
+              <if test="id!=null">
+                  id=#{id}
+              </if>
+              <if test="type!=null and type!=''">
+                 AND type LIKE CONCAT ('%',#{type},'%')
+              </if>
+              <if test="actionName!=null and actionName!=''">
+                  AND action_name=#{actionName}
+              </if>
+              <if test="effective!=null">
+                  AND effective=#{effective}
+              </if>
+          </where>
+                <if test="pageSize != null">
+                    limit #{pageIndex}, #{pageSize}
+                </if>
+    </select>
+
+    <select id="getOne" parameterType="cn.com.hiveview.launcherapi.module.portal.condition.PortalJumpInstructionCondition"  resultType="cn.com.hiveview.launcherapi.module.portal.condition.PortalJumpInstructionCondition">
+        <include refid="selJumpInstruction"/> WHERE type =#{type}
+    </select>
+    <!--统计-->
+    <select id="getCount" resultType="Integer" parameterType="cn.com.hiveview.launcherapi.module.portal.condition.PortalJumpInstructionCondition">
+        SELECT COUNT(id) FROM portal_jump_instruction
+          <where>
+              <if test="id!=null">
+                  id=#{id}
+              </if>
+              <if test="type!=null and type!=''">
+                  AND type LIKE CONCAT ('%',#{type},'%')
+              </if>
+              <if test="actionName!=null and actionName!=''">
+                  AND action_name=#{actionName}
+              </if>
+              <if test="effective!=null">
+                  AND effective=#{effective}
+              </if>
+          </where>
+    </select>
+    <!--增删改-->
+    <insert id="add" parameterType="cn.com.hiveview.launcherapi.module.portal.condition.PortalJumpInstructionCondition">
+        INSERT  INTO portal_jump_instruction(id,type,action_name)
+          VALUES(#{id},#{type},#{actionName})
+    </insert>
+
+    <delete id="delete" parameterType="cn.com.hiveview.launcherapi.module.portal.condition.PortalJumpInstructionCondition">
+        DELETE FROM portal_jump_instruction WHERE id=#{id}
+    </delete>
+
+    <update id="update" parameterType="cn.com.hiveview.launcherapi.module.portal.condition.PortalJumpInstructionCondition">
+        UPDATE portal_jump_instruction
+            <set>
+                <if test="type!=null and type!=''">
+                    type =#{type},
+                </if>
+                <if test="actionName!=null and actionName!=''">
+                    action_name=#{actionName},
+                </if>
+                <if test="effective!=null">
+                    effective=#{effective}
+                </if>
+            </set>
+        WHERE id=#{id}
+    </update>
+    <select id="getActionById" parameterType="cn.com.hiveview.launcherapi.module.portal.condition.PortalJumpInstructionCondition"  resultType="cn.com.hiveview.launcherapi.module.portal.condition.PortalJumpInstructionCondition">
+        <include refid="selJumpInstruction"/> WHERE id =#{id}
+    </select>
+</mapper>

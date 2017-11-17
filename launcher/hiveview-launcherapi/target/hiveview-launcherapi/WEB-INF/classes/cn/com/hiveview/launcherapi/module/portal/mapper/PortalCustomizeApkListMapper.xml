@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.com.hiveview.launcherapi.module.portal.mapper.PortalCustomizeApkListMapper">
+    <resultMap id="PortalCustomizeApkListMap" type="cn.com.hiveview.entity.module.portal.PortalCustomizeApkList">
+        <id column="id" property="id"/>
+        <result column="apk_name" property="apkName"/>
+        <result column="last_version" property="lastVersion"/>
+        <result column="is_effective" property="isEffective"/>
+        <result column="equipment_nos" property="equipmentNos"/>
+        <result column="install_style" property="installStyle"/>
+        <result column="create_time" property="createTime"/>
+        <result column="update_time" property="updateTime"/>
+        <result column="package_name" property="packageName"/>
+        <result column="app_type" property="appType"/>
+    </resultMap>
+    <sql id="homeColumn">
+        id,apk_name,last_version,is_effective,equipment_nos,install_style,create_time,update_time,package_name,app_type
+    </sql>
+    <insert id="add" parameterType="cn.com.hiveview.launcherapi.module.portal.condition.PortalCustomizeApkCondition">
+        insert into portal_customize_apk (apk_name,is_effective,install_style,last_Version,create_time,update_time,package_name,app_type) values (#{apkName},#{isEffective},#{installStyle},#{lastVersion},#{createTime},#{updateTime},#{packageName},#{appType})
+    </insert>
+    <select id="getPageList" resultMap="PortalCustomizeApkListMap"
+            parameterType="cn.com.hiveview.launcherapi.module.portal.condition.PortalCustomizeApkCondition">
+        select id,apk_name,last_version,is_effective,equipment_nos,install_style,create_time,update_time,package_name,app_type FROM portal_customize_apk WHERE 1=1
+        <if test="apkName != null and apkName != ''">
+            AND apk_name LIKE CONCAT('%',#{apkName},'%')
+        </if>
+        <if test="isEffective != null">
+            AND is_effective = #{isEffective}
+        </if>
+        ORDER BY create_time DESC
+        <if test="pageSize != null">
+            limit #{pageIndex}, #{pageSize}
+        </if>
+    </select>
+    <select id="getComboboxList" resultMap="PortalCustomizeApkListMap"
+            parameterType="cn.com.hiveview.launcherapi.module.portal.condition.PortalCustomizeApkCondition">
+        select id,apk_name,last_version,is_effective,equipment_nos,install_style,create_time,update_time,package_name,app_type FROM portal_customize_apk WHERE 1=1
+            and  last_version  is not null
+        <if test="apkName != null and apkName != ''">
+            AND apk_name LIKE CONCAT('%',#{apkName},'%')
+        </if>
+        <if test="isEffective != null">
+            AND is_effective = #{isEffective}
+        </if>
+    </select>
+    <select id="getPageCount" resultType="Integer" parameterType="cn.com.hiveview.launcherapi.module.portal.condition.PortalCustomizeApkCondition">
+        select COUNT(1) FROM portal_customize_apk WHERE 1=1
+        <if test="apkName != null and apkName != ''">
+            AND apk_name LIKE CONCAT('%',#{apkName},'%')
+        </if>
+        <if test="isEffective != null">
+            AND is_effective = #{isEffective}
+        </if>
+    </select>
+
+    <delete id="delete" parameterType="cn.com.hiveview.launcherapi.module.portal.condition.PortalCustomizeApkCondition">
+        DELETE FROM
+        portal_customize_apk where id= #{id}
+    </delete>
+    <update id="update" parameterType="cn.com.hiveview.launcherapi.module.portal.condition.PortalCustomizeApkCondition">
+        UPDATE portal_customize_apk
+        <set>
+            <if test="apkName != null and apkName != ''">
+                apk_name = #{apkName},
+            </if>
+            <if test="isEffective != null">
+                is_effective = #{isEffective},
+            </if>
+            <if test="installStyle != null">
+                install_style = #{installStyle},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime},
+            </if>
+            <if test="packageName != null">
+                package_name=#{packageName},
+            </if>
+            <if test="appType != null">
+                app_type=#{appType}
+            </if>
+        </set>
+        WHERE id=#{id}
+    </update>
+    <update id="updateVersion" parameterType="cn.com.hiveview.launcherapi.module.portal.condition.PortalCustomizeApkCondition">
+        UPDATE portal_customize_apk SET last_version = #{lastVersion} WHERE id=#{id}
+    </update>
+    <select id="getCountByCurdEdit" resultType="Integer" parameterType="cn.com.hiveview.launcherapi.module.portal.condition.PortalBeanCurdEditListCondition">
+        SELECT COUNT(1) from portal_bean_curd_edit WHERE 1=1
+        <if test="customizeAppId !=null and customizeAppId!=''">
+            AND customize_app_id=#{customizeAppId}
+        </if>
+    </select>
+</mapper>

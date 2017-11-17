@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.com.hiveview.launcherapi.module.portal.mapper.TempletHotWordMapper">
+    <resultMap id="templetHotWordMap" type="cn.com.hiveview.entity.module.portal.TempletHotWordList">
+        <id column="id" property="id" />
+        <result column="type" property="type" />
+        <result column="name" property="name" />
+        <result column="apk_id" property="apkId" />
+        <result column="apk_bag_name" property="apkBagName" />
+        <result column="apk_channel_id" property="apkChannelId" />
+        <result column="apk_channel_type" property="apkChannelType" />
+        <result column="templet_id" property="templetId" />
+        <result column="is_effective" property="isEffective" />
+        <result column="seq" property="seq" />
+        <result column="combox_id" property="comboxId" />
+        <result column="create_time" property="createTime" />
+        <result column="update_time" property="updateTime" />
+    </resultMap>
+    <sql id="baseColumns">
+        <![CDATA[id,name,type,apk_id,apk_bag_name,templet_id,apk_channel_id,apk_channel_type,seq,
+           is_effective,combox_id,create_time,update_time]]>
+    </sql>
+
+    <sql id="findPageWhere">
+        <where>
+            <if test="id != null">
+                AND id = #{id}
+            </if>
+            <if test="type != null">
+                AND type = #{type}
+            </if>
+            <if test="apkChannelId != null">
+                AND apk_channel_id = #{apkChannelId}
+            </if>
+            <if test="name != null and name != ''">
+                AND name LIKE CONCAT ('%',#{name},'%')
+            </if>
+            <if test="isEffective !=null and isEffective == -1">
+                AND is_effective > 0
+            </if>
+            <if test="isEffective !=null and isEffective != -1">
+                AND is_effective=#{isEffective}
+            </if>
+            <if test="comboxId !=null">
+                AND combox_id=#{comboxId}
+            </if>
+            <if test="apkChannelType !=null">
+                AND apk_channel_type=#{apkChannelType}
+            </if>
+            <if test="apkId !=null">
+                AND apk_id=#{apkId}
+            </if>
+            <if test="apkBagName !=null and apkBagName !=''">
+                AND apk_bag_name=#{apkBagName}
+            </if>
+            <if test="templetId !=null">
+                AND templet_id=#{templetId}
+            </if>
+
+        </where>
+    </sql>
+    <select id="getList" resultMap="templetHotWordMap"
+            parameterType="cn.com.hiveview.launcherapi.module.portal.condition.TempletHotWordCondition">
+        SELECT
+        <include refid="baseColumns" />
+        FROM
+        new_templet_channel_words
+        <include refid="findPageWhere" />
+        ORDER BY seq ASC
+    </select>
+</mapper>

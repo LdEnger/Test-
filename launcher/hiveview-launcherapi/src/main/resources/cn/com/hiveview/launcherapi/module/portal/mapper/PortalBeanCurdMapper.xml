@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.com.hiveview.launcherapi.module.portal.mapper.PortalBeanCurdMapper">
+
+    <resultMap id="DynamicHomeMap" type="cn.com.hiveview.entity.module.portal.LauncherHomeApiVo">
+        <id column="entrance_id" property="entranceId" />
+        <result column="entrance_name" property="entranceName" />
+        <result column="is_effective" property="isEffective" />
+        <result column="entrance_type" property="entranceType" />
+        <result column="seq" property="seq" />
+        <result column="entrance_app_install" property="installStyle" />
+        <result column="entrance_app_name" property="entranceAppName" />
+        <result column="entrance_app_url" property="entranceUrl" />
+        <result column="entrance_app_version" property="entranceAppVersion" />
+        <result column="entrance_app_str" property="entranceAppAction" />
+        <result column="controller_type" property="controllerType" />
+        <result column="entrance_templete_id" property="areaId" />
+        <collection property="contentList"  ofType="cn.com.hiveview.entity.module.portal.EntranceAppContentApiVo">
+            <result column="contentSeq" property="seq"/>
+            <result column="entrance_img" property="entranceContentImage" />
+            <result column="entrance_subtitle" property="entranceContentFocus" />
+            <result column="entrance_title" property="entranceContentName" />
+        </collection>
+    </resultMap>
+
+    <select id="getLauncherHome" resultMap="DynamicHomeMap">
+        SELECT
+        pbce.entrance_id,
+        pbce.entrance_name,
+        pbce.entrance_type,
+        pbcm.seq,
+        pbce.entrance_app_name,
+        pbce.entrance_app_str,
+        pbce.entrance_app_install,
+        pbce.entrance_app_url,
+        pbce.entrance_app_version,
+        pbci.entrance_title,
+        pbci.entrance_subtitle,
+        pbci.seq AS contentSeq,
+        pbci.entrance_img,
+        pbce.entrance_app_id,
+        pbce.customize_app_id,
+        pbce.entrance_templete_id
+        FROM portal_bean_curd_edit pbce
+        LEFT JOIN portal_bean_curd_mapping pbcm ON pbcm.entrance_id = pbce.entrance_id
+        LEFT JOIN portal_bean_curd_img pbci ON pbci.entrance_id = pbce.entrance_id AND pbci.is_effective = 1
+        WHERE pbcm.`bean_curd_id` = #{curdId} AND pbce.is_effective = 1 ORDER BY pbcm.seq
+
+    </select>
+</mapper>
