@@ -84,4 +84,7 @@ public class PortalCustomRecomContentDao extends SqlSessionDaoSupport{
     public Integer updateBackUpVersion(PortalCustomRecomContentCondition condition){
         return portalCustomRecomContentMapper.updateBackUpVersion(condition);
     }
+    public List<PortalCustomRecomContentCondition> getPageList(PortalCustomRecomContentCondition condition){
+        return portalCustomRecomContentMapper.getPageList(condition);
+    }
 }

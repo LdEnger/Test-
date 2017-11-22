@@ -5,6 +5,8 @@ import com.alibaba.fastjson.serializer.SerializerFeature;
 import lombok.Data;
 
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 /**
  * Created by chimeilong on 17/5/25.
@@ -24,6 +26,10 @@ public class JsonMessage implements Serializable {
      * 返回数据
      */
     private Object data;
+    /**
+     * 当前时间
+     */
+    private String currentTime;
 
     /**
      * 生成返回数据
@@ -53,6 +59,8 @@ public class JsonMessage implements Serializable {
         jsonMessage.returnValue = value;
         jsonMessage.errorMessage = errMessage;
         jsonMessage.data = data;
+        jsonMessage.currentTime = getTime();
+        System.out.println(JSON.toJSONString(jsonMessage,SerializerFeature.WriteMapNullValue));
         return  JSON.toJSONString(jsonMessage, SerializerFeature.WriteMapNullValue);
     }
 
@@ -65,5 +73,10 @@ public class JsonMessage implements Serializable {
 //    public <T> T getDataParse(Class<T> clazz) {
 //        return JSON.parseObject(data, clazz);
 //    }
-
+    public static String getTime(){
+         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+         Date date = new Date();
+         String res = simpleDateFormat.format(date);
+         return res;
+     }
 }

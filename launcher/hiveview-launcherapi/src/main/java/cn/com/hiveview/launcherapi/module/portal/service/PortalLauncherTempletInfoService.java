@@ -11,14 +11,12 @@ import cn.com.hiveview.launcherapi.module.portal.dao.PortalLauncherTempletInfoDa
 import cn.com.hiveview.launcherapi.module.portal.util.IpUtil;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import redis.clients.jedis.ShardedJedisPool;
-
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
@@ -28,7 +26,7 @@ import java.util.Random;
  */
 @Service
 public class PortalLauncherTempletInfoService {
-    static Log logger = LogFactory.getLog(PortalLauncherTempletInfoService.class);
+    private static final Logger logger = LoggerFactory.getLogger(PortalLauncherTempletInfoService.class.getName());
     @Autowired
     private ShardedJedisPool shardedJedisPool;
     private static String fixKey = "userid_:";
@@ -79,20 +77,14 @@ public class PortalLauncherTempletInfoService {
                     }
                 }
                 if(list == null){
-                    logger.info("第一次打印ccode;"+ccode);
                     String citycodeKey = "R_K_LAUNCHER_CATCH_AREA_CODE_IP_"+ ip+"_"+mac+"_"+sn;
                     ccode = redisService.get(citycodeKey);
-                    logger.info("ccode = redisService.get(citycodeKey);"+ccode);
                     if (StringUtils.isEmpty(ccode)) {
                         Map<String, String> cityMap = IpUtil.cityCodeByIp(ip);
-                        logger.info("ip地址是什么"+ip);
-                        logger.debug("debug===ip地址是什么"+ip);
-                        logger.info("cityMap:"+cityMap);
                         if (cityMap != null) {
                             ccode = cityMap.get("ccode");
                         }
                     }
-                    logger.info("最后===ccode"+ccode);
                     if (!StringUtils.isEmpty(ccode) && ccode.length() < 20) {
                         redisService.setEx(citycodeKey,getRandomTime(), ccode);
                     }
@@ -131,7 +123,6 @@ public class PortalLauncherTempletInfoService {
 
                 // 根据IP查找
                 if (list == null) {
-                    logger.info("最后一种逻辑,IP地址逻辑====ip："+ip);
                     String citycodeKey = "R_K_LAUNCHER_CATCH_AREA_CODE_IP_"+ ip+"_"+mac+"_"+sn;
                     ccode = redisService.get(citycodeKey);
                     if (StringUtils.isEmpty(ccode)) {
@@ -140,7 +131,6 @@ public class PortalLauncherTempletInfoService {
                             ccode = cityMap.get("ccode");
                         }
                     }
-                    logger.info("2>>>>>>ccode："+ccode);
                     if (!StringUtils.isEmpty(ccode) && ccode.length() < 20) {
                         redisService.setEx(citycodeKey,getRandomTime(), ccode);
                     }
@@ -150,7 +140,6 @@ public class PortalLauncherTempletInfoService {
                     }
                     search.setAreaCode(ccode);
                     search.setType(1);
-                    logger.info("3>>>>>>ccode："+ccode);
                     list = portalLauncherTempletInfoDao.getLauncherTempletInfo(search);
                 }
 

@@ -1,5 +1,6 @@
 package cn.com.hiveview.launcherapi.module.portal.service;
 
+import cn.com.hiveview.entity.module.common.ScriptPage;
 import cn.com.hiveview.entity.module.portal.*;
 import cn.com.hiveview.launcherapi.module.portal.condition.*;
 import cn.com.hiveview.launcherapi.module.portal.dao.*;
@@ -408,4 +409,14 @@ public class PortalCustomRecomContentService {
         return portalCustomRecomContentCondition1;
     }
 
+    public ScriptPage<PortalCustomRecomContentCondition> getPageList(PortalCustomRecomContentCondition condition){
+        ScriptPage<PortalCustomRecomContentCondition> scriptPage = new ScriptPage<PortalCustomRecomContentCondition>();
+        condition.setPageIndex(condition.getPage());
+        condition.setPageSize(condition.getRows());
+        List<PortalCustomRecomContentCondition> rows = this.portalCustomRecomContentDao.getPageList(condition);
+        int total = this.portalCustomRecomContentDao.getCount(condition);
+        scriptPage.setRows(rows);
+        scriptPage.setTotal(total);
+        return scriptPage;
+    }
 }

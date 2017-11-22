@@ -11,7 +11,7 @@ import java.io.Serializable;
  */
 @EqualsAndHashCode(callSuper = false)
 @Data
-public class YouGouGoodsCondition  extends BaseCondition implements Serializable {
+public class YouGouGoodsCondition extends BaseCondition implements Serializable {
     private static final long serialVersionUID = 8084901913995983088L;
     /**
      * 商品种类编号

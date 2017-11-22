@@ -71,7 +71,9 @@
             </if>
         </where>
     </select>
-
+    <select id="getPageList" parameterType="cn.com.hiveview.launcherapi.module.portal.condition.PortalCustomRecomContentCondition" resultMap="customRecomContentMap">
+        select * from portal_custom_recom_content limit #{pageIndex}, #{pageSize}
+    </select>
     <select id="getCount" parameterType="cn.com.hiveview.launcherapi.module.portal.condition.PortalCustomRecomContentCondition" resultType="Integer" >
         SELECT
         count(*)

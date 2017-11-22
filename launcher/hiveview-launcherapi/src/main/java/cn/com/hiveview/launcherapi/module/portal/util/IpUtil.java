@@ -1,11 +1,14 @@
 package cn.com.hiveview.launcherapi.module.portal.util;
 
 import cn.com.hiveview.core.util.Constants;
+import cn.com.hiveview.launcherapi.module.portal.service.NavigationService;
 import cn.com.hiveview.launcherapi.module.portal.service.PortalLauncherTempletInfoService;
 import com.alibaba.fastjson.JSONObject;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 
 import javax.servlet.http.HttpServletRequest;
@@ -17,7 +20,7 @@ import java.util.Map;
  * Created by user on 2017/7/19.
  */
 public class IpUtil {
-    static Log logger = LogFactory.getLog(IpUtil.class);
+    private static final Logger logger = LoggerFactory.getLogger(IpUtil.class.getName());
     public static Map<String, String> cityCodeByIp(String ip) {
         Map<String, String> resultMap=new HashMap<String, String>();
         String url = MessageFormat.format(Constants.IP_IsGroupUser,
@@ -28,8 +31,6 @@ public class IpUtil {
                 .append(Constants.VERSION);
         try {
             String jsonRes = HttpUtil.reqPost(buffer.toString());
-            logger.info("buffer.toString()"+buffer.toString());
-            logger.info("IP-------"+ip+"------请求返回串："+jsonRes);
             if (!StringUtils.isEmpty(jsonRes)) {
                 JSONObject jsonString = JSONObject.parseObject(jsonRes).getJSONObject("result");
                 String province = jsonString.getString("province");

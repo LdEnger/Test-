@@ -27,4 +27,5 @@ public interface PortalCustomRecomContentMapper {
     Integer getVideoCount(PortalCustomRecomContentCondition condition);
     Integer updateVersion(PortalCustomRecomContentCondition condition);
     Integer updateBackUpVersion(PortalCustomRecomContentCondition condition);
+    List<PortalCustomRecomContentCondition> getPageList(PortalCustomRecomContentCondition condition);
 }

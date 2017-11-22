@@ -3,17 +3,16 @@ package cn.com.hiveview.launcherapi.module.portal.controller;
 import cn.com.hiveview.entity.module.common.JsonMessage;
 import cn.com.hiveview.entity.module.portal.PortalCustomRecomContentApiVo;
 import cn.com.hiveview.launcherapi.module.portal.condition.PortalCustomRecomContentCondition;
+import cn.com.hiveview.launcherapi.module.portal.condition.PortalTabCondition;
 import cn.com.hiveview.launcherapi.module.portal.service.PortalCustomRecomContentService;
 import cn.com.hiveview.launcherapi.module.portal.service.RedisService;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.alibaba.fastjson.serializer.SerializerFeature;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
@@ -80,5 +79,17 @@ public class PortalCustomRecomContentController {
     }
     public int getRandomTime(){
         return 5400 + new Random().nextInt(1800);
+    }
+
+    @RequestMapping(value = { "/getPageList" })
+    @ResponseBody
+    public Object getPageList(@RequestBody String getStr) {
+        try {
+            PortalCustomRecomContentCondition getBean = JSON.parseObject(getStr, PortalCustomRecomContentCondition.class);
+            return JSON.toJSONString(portalCustomRecomContentService.getPageList(getBean), SerializerFeature.WriteMapNullValue);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            return null;
+        }
     }
 }

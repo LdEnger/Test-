@@ -199,7 +199,8 @@ apk_bag_name,templet_id,operate_content,app_category,qiyi_is_vip,create_time,upd
         where
 
          fixed_recom_id = #{fixedRecomId}
-
+        order BY
+        seq
     </select>
     <select id="getFixedRecommendContentCount" parameterType="cn.com.hiveview.launcherapi.module.portal.condition.PortalFixedRecomContentCondition" resultType="Integer">
         SELECT

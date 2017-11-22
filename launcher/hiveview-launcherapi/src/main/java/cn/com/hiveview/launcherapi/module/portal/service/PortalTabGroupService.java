@@ -13,6 +13,8 @@ import cn.com.hiveview.launcherapi.module.portal.dao.PortalTabGroupDao;
 import com.alibaba.fastjson.JSON;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
@@ -27,8 +29,7 @@ import java.util.Random;
  */
 @Service
 public class PortalTabGroupService {
-
-    static Log logger = LogFactory.getLog(PortalTabGroupService.class);
+    private static final Logger logger = LoggerFactory.getLogger(PortalTabGroupService.class.getName());
     @Autowired
     private PortalTabGroupDao portalTabGroupDao;
     @Autowired

@@ -35,7 +35,7 @@ public class YouGouGoodsController {
     @ResponseBody
     public  List<YouGouGoodsCategory> getComboboxList(@RequestBody String getStr) {
         try {
-            ScriptPage<YouGouGoodsCategory> scriptPage = new ScriptPage<YouGouGoodsCategory>();
+            ScriptPage<YouGouGoodsCategory> scriptPage = new ScriptPage<>();
             JsonMessage getBean = JSON.parseObject(getTopCategoryList(getStr).toString(), JsonMessage.class);
             scriptPage= JSON.parseObject(getBean.getData().toString(), ScriptPage.class);
             List<YouGouGoodsCategory> list = (List<YouGouGoodsCategory>) scriptPage.getRows();
@@ -49,7 +49,7 @@ public class YouGouGoodsController {
     @ResponseBody
     public  List<YouGouGoodsCategory> getSubComboboxList(@RequestBody String getStr) {
         try {
-            ScriptPage<YouGouGoodsCategory> scriptPage = new ScriptPage<YouGouGoodsCategory>();
+            ScriptPage<YouGouGoodsCategory> scriptPage = new ScriptPage<>();
             JsonMessage getBean = JSON.parseObject(getSubCategoryList(getStr).toString(), JsonMessage.class);
             scriptPage= JSON.parseObject(getBean.getData().toString(), ScriptPage.class);
             List<YouGouGoodsCategory> list = (List<YouGouGoodsCategory>) scriptPage.getRows();

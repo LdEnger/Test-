@@ -239,7 +239,7 @@
         pcrc.chn_id,pcrc.chn_type,pcrc.hot_id,pcrc.hot_type,pcrc.apk_bag_name,
         pcrl.layout_x,pcrl.layout_y,pcrl.layout_w,pcrl.layout_h,pcrc.content_big_pic,pcrc.video_id,
         pcrc.apk_version_code,pcrc.apk_down_url,pcrc.action,pcrl.col,pcrl.row,pcrc.spec_sn,pcrc.video_url,pcrc.install_style,pcrc.app_type,pcrc.apk,
-        (CASE  WHEN   pcrc.custom_content_img_sel = 2 THEN pcrc.content_outcrop_img ELSE NULL END ) AS content_outcrop_img,
+        pcrc.content_outcrop_img,
         (CASE  WHEN   pcrc.content_id = -1 THEN 0 ELSE 1 END ) AS isFocusable
         FROM portal_custom_recom_content pcrc
         LEFT JOIN `portal_custom_recom_templete` pcrt ON pcrc.`recom_templet_id` = pcrt.`templete_id`

@@ -13,7 +13,6 @@ public class DBHelper {
     public static final String DB_TYPE_R = "dataSource_db02";
   
     public String getDBType() {
-        System.out.println("---contextHoldex-----"+contextHolder+"---"+contextHolder.get());
         String db = contextHolder.get();  
         if (db == null) {
             db = DB_TYPE_RW;// 默认是读写库
