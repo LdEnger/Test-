@@ -3,6 +3,8 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/Test-.iml" filepath="$PROJECT_DIR$/.idea/Test-.iml" />
+      <module fileurl="file://$PROJECT_DIR$/launcher/hiveview-launcher/hiveview-launcher.iml" filepath="$PROJECT_DIR$/launcher/hiveview-launcher/hiveview-launcher.iml" />
+      <module fileurl="file://$PROJECT_DIR$/launcher/hiveview-launcherapi/hiveview-launcherapi.iml" filepath="$PROJECT_DIR$/launcher/hiveview-launcherapi/hiveview-launcherapi.iml" />
     </modules>
   </component>
 </project>

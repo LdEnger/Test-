@@ -261,6 +261,11 @@
                 <input id="playFlag" type="hidden">
                 <input id="installStyle" type="hidden">
                 <input id="appType" type="hidden">
+                <input id="w" type="hidden">
+                <input id="h" type="hidden">
+                <input id="r" type="hidden">
+                <input id="c" type="hidden">
+                <input id="source" type="hidden">
                <div style="float: left;width:300px;height:640px;border: 1px #99BBE8 solid;" id="customLeftDiv">
                     <table id="customLeftTable">
                         <tr>
@@ -335,6 +340,7 @@
                             <option value ='10'>Tab页</option>
                             <option value ='11'>常规活动</option>
                             <option value ='12'>启动应用</option>
+                            <option value ='14'>新商品包详情页</option>
                         </select>
                         <div id ="div_1"><label for="customTempletId" style="display: inline-block;">模板：</label><select id ="customTempletId" style="width: 91px;vertical-align: -1px;"></select><label for="customTempleApk" style="display: inline-block;">包名：</label><select style="width: 106px;vertical-align: -1px;" id = "customTempleApk" onchange="initCustomTempletApkBindEvent();"></select>
                             <div id ="dm" style="display: inline">
@@ -380,6 +386,7 @@
                         </div>
                         <div id ="div_12"><table id ="content12"></table>
                         </div>
+                        <div id ="div_14"><label for="name_14" style="display: inline-block;">名称：</label><input id="name_14" style="width:80px;vertical-align: -1px;"><button class="btn btn-default" onclick="selectCustomData();" style="vertical-align: -1px;">查询</button></div>
                         <div id="customRecomContentByTypeDiv" style="height: 470px;overflow:auto;">
                             <table class="table table-striped table-bordered table-hover dataTable" id="customRecomContentByTypeTable"
                                    aria-describedby="customRecomContentByTypeTable">

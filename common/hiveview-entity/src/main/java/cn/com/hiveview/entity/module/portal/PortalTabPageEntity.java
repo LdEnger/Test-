@@ -17,4 +17,5 @@ public class PortalTabPageEntity implements Serializable {
     private List<PortalGroupEntity> list;
     private Integer page;
     private Integer size;
+    private String version;
 }

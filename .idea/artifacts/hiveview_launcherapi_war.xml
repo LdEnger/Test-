@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="hiveview-launcherapi:war">
+    <output-path>$PROJECT_DIR$/launcher/hiveview-launcherapi/target</output-path>
+    <root id="archive" name="hiveview-launcherapi.war">
+      <element id="artifact" artifact-name="hiveview-launcherapi:war exploded" />
+    </root>
+  </artifact>
+</component>

@@ -309,8 +309,8 @@ function areaAdd() {
         $("#txt_packageName option:first").prop("selected", 'selected');
         $("#txt_apkPackageName option:first").prop("selected", 'selected');
         $("#txt_apk_channel option:first").prop("selected", 'selected');
-        $("#txt_row").attr("readOnly",true);
-        $("#txt_col").attr("readOnly",true);
+/*        $("#txt_row").attr("readOnly",true);
+        $("#txt_col").attr("readOnly",true);*/
         $("#dataGroupPageName").show();
         $("#chanID").show();
         $("#apkChannelDiv").hide();
@@ -1893,8 +1893,8 @@ function widthInput() {
         var resule1 = parseInt(resule) + parseInt(30);
         var resul = parseInt(1920/resule1);
         $("#txt_col").val(resul);
-        $("#txt_row").attr("readOnly",false);
-        $("#txt_col").attr("readOnly",true);
+/*        $("#txt_row").attr("readOnly",false);
+        $("#txt_col").attr("readOnly",true);*/
     }
     }else {
         return false;
@@ -1911,8 +1911,8 @@ function heightInput() {
         var resule1 = parseInt(resule) + parseInt(30);
         var resul = parseInt(837 / resule1);
         $("#txt_row").val(resul);
-        $("#txt_col").attr("readOnly",false);
-        $("#txt_row").attr("readOnly",true);
+ /*       $("#txt_col").attr("readOnly",false);
+        $("#txt_row").attr("readOnly",true);*/
     }
     }else {
         return false;
@@ -2002,8 +2002,8 @@ function widthInputEdit() {
             var resule1 = parseInt(resule) + parseInt(30);
             var resul = parseInt(1920/resule1);
             $("#txt_col").val(resul);
-            $("#txt_row").attr("readOnly",false);
-            $("#txt_col").attr("readOnly",true);
+/*            $("#txt_row").attr("readOnly",false);
+            $("#txt_col").attr("readOnly",true);*/
   /*      }*/
     }else {
         return false;
@@ -2020,8 +2020,8 @@ function heightInputEdit() {
             var resule1 = parseInt(resule) + parseInt(30);
             var resul = parseInt(837 / resule1);
             $("#txt_row").val(resul);
-            $("#txt_col").attr("readOnly",false);
-            $("#txt_row").attr("readOnly",true);
+/*            $("#txt_col").attr("readOnly",false);
+            $("#txt_row").attr("readOnly",true);*/
    /*     }*/
     }else {
         return false;

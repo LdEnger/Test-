@@ -1,6 +1,9 @@
 package cn.com.hiveview.launcherapi.module.portal.dao;
 
+import cn.com.hiveview.entity.module.portal.PortalAreaAdministrationListEntity;
+import cn.com.hiveview.entity.module.portal.PortalAreaAdministrationListVo;
 import cn.com.hiveview.entity.module.portal.PortalAreaContentListVo;
+import cn.com.hiveview.launcherapi.module.portal.condition.PortalAreaAdminirationListCondition;
 import cn.com.hiveview.launcherapi.module.portal.condition.PortalAreaContentListCondition;
 import cn.com.hiveview.launcherapi.module.portal.mapper.PortalAreaContentMapper;
 import org.apache.ibatis.session.SqlSessionFactory;
@@ -50,11 +53,20 @@ public class PortalAreaContentDao extends SqlSessionDaoSupport {
         return  portalAreaContentMapper.update(condition);
     }
 
-    public PortalAreaContentListVo getAreaMinSeq(PortalAreaContentListCondition condition){
-        return  portalAreaContentMapper.getAreaMinSeq(condition);
+    public PortalAreaContentListVo getMinContent(PortalAreaContentListCondition condition){
+        return  portalAreaContentMapper.getMinContent(condition);
     }
-    public PortalAreaContentListVo getAreaMaxSeq(PortalAreaContentListCondition condition){
-        return portalAreaContentMapper.getAreaMaxSeq(condition);
+    public PortalAreaContentListVo getMaxContent(PortalAreaContentListCondition condition){
+        return portalAreaContentMapper.getMaxContent(condition);
     }
+    public Integer getMaxSeq(PortalAreaContentListCondition condition){
+        return portalAreaContentMapper.getMaxSeq(condition);
+    };
+    public PortalAreaContentListVo getTopSeq(PortalAreaContentListCondition condition){
+        return portalAreaContentMapper.getTopSeq(condition);
+    };
 
+    public List<PortalAreaAdministrationListEntity> getAreaContentList(PortalAreaContentListCondition condition){
+        return portalAreaContentMapper.getAreaContentList(condition);
+    }
 }

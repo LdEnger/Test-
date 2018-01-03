@@ -38,4 +38,5 @@ public class PortalTabGroupCondition extends BaseCondition implements Serializab
     private Date updateTime; //更新时间
     private Integer upAndDown; //group纵横
     private String groupBackground; //group背景图
+    private String version;//版本号
 }

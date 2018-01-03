@@ -28,5 +28,6 @@ public class PortalGroupEntity {
         private Integer height;
         private Integer upAndDown;
         private String groupBackground;//group背景图片
+        private String version;
         private List<PortalRecommendEntity> list;
 }

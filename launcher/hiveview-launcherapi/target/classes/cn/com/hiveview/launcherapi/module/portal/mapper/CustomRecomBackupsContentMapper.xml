@@ -233,6 +233,12 @@
             <if test="apk != null">
                 apk = #{apk},
             </if>
+            <if test="installStyle != null">
+                install_style = #{installStyle},
+            </if>
+            <if test="appType != null">
+                app_type = #{appType},
+            </if>
             update_time = #{updateTime}
         </set>
         <where>

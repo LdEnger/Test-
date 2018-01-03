@@ -52,4 +52,7 @@ public class NewContentChanDao extends SqlSessionDaoSupport {
     public List<NewContentChanList> getDataGroupList(NewContentChanCondition condition){
         return newContentChanMapper.getDataGroupList(condition);
     }
+    public NewContentChanCondition getOneChan(NewContentChanCondition condition){
+        return newContentChanMapper.getOneChan(condition);
+    }
 }

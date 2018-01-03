@@ -55,8 +55,6 @@ public class PortalScreenBigPicsListService {
         psConditon.setContentId(condition.getImgId());
         Integer pResult = portalScreentRecommendContentDao.getBigPic(pCondition);
         Integer psResult = portalCustomRecomContentDao.getCount(psConditon);
-        System.out.println(pResult);
-        System.out.println(psResult);
         if((pResult > 0) || (psResult > 0) ){
             return -1;
         }

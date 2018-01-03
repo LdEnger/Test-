@@ -89,7 +89,7 @@
                             <button id="btn_manage" class="btn yellow" type="button" onclick="manage()">管理分组</button>
                         </div>&nbsp;&nbsp;
                         <div class="btn-group">
-                            <button id="btn_import" class="btn yellow" type="button">导入excel</button>
+                            <button id="btn_import" class="btn yellow" type="submit">导入excel</button>
                         </div>&nbsp;&nbsp;
                         <label style="display:inline-block;vertical-align: 3px;" for="txt_areaCode1">分组：</label>
                         <div class="btn-group">

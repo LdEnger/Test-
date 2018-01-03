@@ -149,6 +149,7 @@ public class PortalTabGroupController {
     public Object getList(@PathVariable Integer tabId, @PathVariable Integer page, @PathVariable Integer size, @PathVariable String version) {
         try {
             PortalTabGroupCondition condition = new PortalTabGroupCondition();
+            condition.setVersion(version);
             condition.setBelongTabId(tabId);
             condition.setPage(page);
             condition.setRows(size);

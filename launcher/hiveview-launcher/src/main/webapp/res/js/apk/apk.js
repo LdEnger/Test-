@@ -9,6 +9,7 @@ $(document).ready(function () {
     $('#txt_appType').change(function () {
         var appType=$('#txt_appType').val();
         if(appType==0){
+            $("#txt_installStyle").val('1');
             $("#txt_installStyle").attr("disabled",true);
         }else {
             $("#txt_installStyle").attr("disabled",false);

@@ -78,7 +78,7 @@ function initTable(imgName) {
                  /*   str += '&nbsp;|&nbsp;<a href="javascript:tabBackgroup(' + row.imgId + "," + row.tabBackground + ')"><span style="color:#7d7d7d">设为Tab背景</span></a>';*/
                     str += '&nbsp;|&nbsp;<span style="color: #0d638f">设为Tab背景</span>';
                 }
-                str += '&nbsp;|&nbsp; <a href="javascript:del('+row.imgId+')">删除</a>';
+                str += '&nbsp;|&nbsp; <a href="javascript:del('+row.imgId+','+ row.tabBackground + ')">删除</a>';
                 return str;
             }
         } ] ],
@@ -124,8 +124,11 @@ function  edit(imgId,imgName,imgAddr) {
     $("#recommendContentImg").attr("src",imgAddr);
     $("#myModal").modal({backdrop: 'static', keyboard: false});
 }
-function  del(imgId) {
-    if (confirm("是否确认删除？")) {
+function  del(imgId,tabBackground) {
+    if(tabBackground == 1){
+        alert("数据已作关联，无法删除");
+
+    }else if (confirm("是否确认删除？")) {
         var bigpics = {
             imgId : imgId
         };

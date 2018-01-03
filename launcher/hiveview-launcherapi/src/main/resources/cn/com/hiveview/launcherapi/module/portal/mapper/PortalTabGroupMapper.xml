@@ -154,7 +154,10 @@
             <if test="belongGroupId!=null">
                 AND belong_group_id=#{belongGroupId}
             </if>
-            <if test="id==null and belongTabId==null and belongGroupId==null">
+            <if test="groupType!=null">
+                AND group_type=#{groupType}
+            </if>
+            <if test="id==null and belongTabId==null and belongGroupId==null and groupType==null">
                 AND FALSE
             </if>
         </where>
@@ -162,7 +165,7 @@
     </update>
     <select id="getList" resultMap="portalTabPageEntityMap"
             parameterType="cn.com.hiveview.launcherapi.module.portal.condition.PortalTabGroupCondition">
-       select tg.belong_tab_id as tabId,t.tab_back_pic as backgroud,#{page} as page,#{rows} as size,tg.belong_group_id as groupId,tg.group_name as groupName,tg.group_type as groupType,tg.is_show as isShow,tg.group_title as groupTitle,tg.content_type as contentType,tg.apk_bag_name as apkBagName,tg.chn_id as chnId,tg.chn_type as chnType,tg.hot_id as hotId,tg.col as col,tg.row as row,tg.width as width,tg.height as height,1 as templetId,tg.up_and_down as upAndDown,tg.group_background as groupBackground from portal_tab_group tg inner join portal_tab t on tg.belong_tab_id = t.id
+       select tg.belong_tab_id as tabId,t.tab_back_pic as backgroud,#{page} as page,#{rows} as size,#{version} as version,tg.belong_group_id as groupId,tg.group_name as groupName,tg.group_type as groupType,tg.is_show as isShow,tg.group_title as groupTitle,tg.content_type as contentType,tg.apk_bag_name as apkBagName,tg.chn_id as chnId,tg.chn_type as chnType,tg.hot_id as hotId,tg.col as col,tg.row as row,tg.width as width,tg.height as height,1 as templetId,tg.up_and_down as upAndDown,tg.group_background as groupBackground from portal_tab_group tg inner join portal_tab t on tg.belong_tab_id = t.id
         <where>
         tg.is_effective =1 and t.is_effective =1
         <if test="belongTabId != null">
@@ -179,6 +182,7 @@
         <result column="backgroud" property="backgroud"/>
         <result column="page" property="page"/>
         <result column="size" property="size"/>
+        <result column="version" property="version"/>
         <collection property="list" ofType="cn.com.hiveview.entity.module.portal.PortalGroupEntity">
             <result column="groupId" property="groupId"/>
             <result column="groupName" property="groupName"/>
@@ -197,7 +201,7 @@
             <result column="height" property="height"/>
             <result column="upAndDown" property="upAndDown"/>
             <result column="groupBackground" property="groupBackground"/>
-            <collection property="list" column="{groupType=groupType,groupId=groupId}" select="cn.com.hiveview.launcherapi.module.portal.mapper.PortalTabGroupMapper.getRecommendList"/>
+            <collection property="list" column="{groupType=groupType,groupId=groupId,version=version}" select="cn.com.hiveview.launcherapi.module.portal.mapper.PortalTabGroupMapper.getRecommendList"/>
         </collection>
     </resultMap>
     <resultMap id="customRecomContentMap" type="cn.com.hiveview.entity.module.portal.PortalRecommendEntity">
@@ -238,7 +242,8 @@
         pcrc.id,pcrc.content_id,pcrc.content_type,pcrc.content_name,pcrc.content_subtitle,pcrc.content_img,1 as templete_id,pcrc.layout_id,
         pcrc.chn_id,pcrc.chn_type,pcrc.hot_id,pcrc.hot_type,pcrc.apk_bag_name,
         pcrl.layout_x,pcrl.layout_y,pcrl.layout_w,pcrl.layout_h,pcrc.content_big_pic,pcrc.video_id,
-        pcrc.apk_version_code,pcrc.apk_down_url,pcrc.action,pcrl.col,pcrl.row,pcrc.spec_sn,pcrc.video_url,pcrc.install_style,pcrc.app_type,pcrc.apk,
+        pcrc.apk_version_code,pcrc.apk_down_url,pcrc.action,pcrl.col,pcrl.row,pcrc.spec_sn,pcrc.video_url,pcrc.install_style,pcrc.apk,
+        (CASE  WHEN  ( #{version} = '4.0' and pcrc.content_type != 12) then 0 ELSE pcrc.app_type END ) AS appType,
         pcrc.content_outcrop_img,
         (CASE  WHEN   pcrc.content_id = -1 THEN 0 ELSE 1 END ) AS isFocusable
         FROM portal_custom_recom_content pcrc

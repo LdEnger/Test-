@@ -35,16 +35,16 @@ public class PortalAreaAdminirationController {
             }
     }
 
-    @RequestMapping("/delelte")
+    @RequestMapping("/delete")
     @ResponseBody
     public Object delete(@RequestBody String delStr){
         try {
             if(StringUtils.isBlank(delStr)){
-                return JsonMessage.create(-1l, "参数不能为空", "");
+                return JsonMessage.create(-1L, "参数不能为空", "");
             }
             PortalAreaAdminirationListCondition delCodition = JSON.parseObject(delStr,PortalAreaAdminirationListCondition.class);
             if(null == delCodition){
-                return JsonMessage.create(-1l, "反序列化失败", "");
+                return JsonMessage.create(-1L, "反序列化失败", "");
             }
             Integer str = portalAreaAdminirationService.delete(delCodition);
             if(str == -1){

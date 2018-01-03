@@ -180,6 +180,13 @@
                     <span class="arrow"></span>
                 </a>
             </li>
+            <li>
+                <a href="${ctx}/areaController/list">
+                    <i class="icon-cogs"></i>
+                    <span class="title">专区管理</span>
+                    <span class="arrow"></span>
+                </a>
+            </li>
             <%--<li>
                 <a href="${ctx}/portal/list">
                     <i class="icon-film"></i>

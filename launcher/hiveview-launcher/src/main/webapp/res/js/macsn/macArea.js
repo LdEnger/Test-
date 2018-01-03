@@ -33,10 +33,10 @@ function option() {
     });
 
     //根据选择的分组查询
-    /*$('#txt_areaCode1').change(function () {
+   /** ('#txt_areaCode1').change(function () {
         var areaCode=$(this).find("option:selected").val();
         initTable(areaCode, null, null);
-    });*/
+    });**/
 
     $('#btn_select').click(function () {
         var selectMac=$('#txt_seleteMac').val();
@@ -438,21 +438,22 @@ function areaGroup_submit() {
 }
 
 function initUploadMacSnExcel() {
-        var import_button = $("#btn_import");
-        import_button.bind("click", function() {
+        $("#btn_import").click(function() {
+            var button = $('#btn_import');
             var areaCode = $('#txt_areaCode1 option:selected').val();
             var areaName = $('#txt_areaCode1 option:selected').html();
-            if(areaCode == null || areaCode ==''){
-               alert("请选择分组后再导入！");
+            if(areaCode == null || areaCode =='') {
+                alert("请选择分组后再导入！");
                 return;
             }
-            new AjaxUpload(import_button, {
+            new AjaxUpload(button, {
                 action : ctx+ '/macsn/uploadExcel',
                 autoSubmit : true,
                 name : 'file',// 文件对象名称（不是文件名）
-                data : {"areaCode":areaCode,"areaName":areaName},
-                onChange : function(file, extension) {
+                data : {},
+                onSubmit : function(file, extension) {
                     console.log(file);
+                    this.setData({"areaCode":$('#txt_areaCode1 option:selected').val(),"areaName":$('#txt_areaCode1 option:selected').html()});
                     var d = /\.[^\.]+$/.exec(file); // 文件后缀
                     if (d != ".xls" && d != ".xlsx") {
                         alert('文件格式错误，请上传.xls或.xlsx格式！');

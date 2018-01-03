@@ -18,4 +18,5 @@ public interface NewContentChanMapper {
     NewContentChanList get(NewContentChanCondition condition);
     List<NewContentChanList> getList(NewContentChanCondition condition);
     List<NewContentChanList> getDataGroupList(NewContentChanCondition condition);
+    NewContentChanCondition getOneChan(NewContentChanCondition condition);
 }

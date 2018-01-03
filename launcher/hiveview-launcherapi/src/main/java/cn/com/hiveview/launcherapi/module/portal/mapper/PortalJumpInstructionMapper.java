@@ -2,6 +2,7 @@ package cn.com.hiveview.launcherapi.module.portal.mapper;
 
 import cn.com.hiveview.core.mybatis.SqlMapper;
 import cn.com.hiveview.entity.module.portal.AppVo;
+import cn.com.hiveview.entity.module.portal.PortalJumpInstructionVo;
 import cn.com.hiveview.launcherapi.module.portal.condition.AppCondition;
 import cn.com.hiveview.launcherapi.module.portal.condition.PortalJumpInstructionCondition;
 
@@ -25,5 +26,8 @@ public interface PortalJumpInstructionMapper {
 
     PortalJumpInstructionCondition getOne(PortalJumpInstructionCondition condition);
 
-    PortalJumpInstructionCondition getActionById(PortalJumpInstructionCondition condition);
+    PortalJumpInstructionVo getActionById(PortalJumpInstructionCondition condition);
+
+    List<PortalJumpInstructionVo> getInfoByStartApk(PortalJumpInstructionCondition condition);
+
 }

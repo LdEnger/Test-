@@ -170,6 +170,11 @@
                         <label for="actionName" style="display: inline-block;"><span style="color:red">*</span>action名称：</label>
                         <input type="text" name="logo_license_name" class="form-control" id="actionName" placeholder="请输入action名称" style="vertical-align: -1px;">
                     </div>
+                    <div class="form-group">
+                        <label for="txt_startApk" style="display: inline-block;margin-right: 0px;">APK名称：</label>
+                        <select class="form-control selectpicker" data-mobile="true" name="txt_startApk" id="txt_startApk" style="vertical-align: -1px;margin-left: 18px;">
+                        </select>
+                    </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" onclick="submitJumpInstructionInfo();">保存</button>

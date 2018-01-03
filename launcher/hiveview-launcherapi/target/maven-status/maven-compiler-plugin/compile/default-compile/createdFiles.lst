@@ -8,6 +8,7 @@ cn\com\hiveview\launcherapi\module\portal\controller\ProgramController.class
 cn\com\hiveview\launcherapi\module\portal\service\NewVipActivityService.class
 cn\com\hiveview\launcherapi\module\portal\condition\PortalStartInstructionCondition.class
 cn\com\hiveview\launcherapi\module\portal\condition\YouGouSpecialsCondition.class
+cn\com\hiveview\launcherapi\module\portal\dao\PbGoodsDao.class
 cn\com\hiveview\launcherapi\module\portal\condition\PortalFixedRecomListCondition.class
 cn\com\hiveview\launcherapi\module\portal\controller\CustomRecomTempleteController.class
 cn\com\hiveview\launcherapi\module\portal\condition\NewTempletApkCondition.class
@@ -28,6 +29,7 @@ cn\com\hiveview\launcherapi\module\portal\condition\NewTempletApkChannelConditio
 cn\com\hiveview\launcherapi\module\portal\mapper\PortalMacAreaListMapper.class
 cn\com\hiveview\launcherapi\module\portal\service\ProgramService.class
 cn\com\hiveview\launcherapi\module\portal\mapper\ProgramMapper.class
+cn\com\hiveview\launcherapi\module\portal\mapper\PbGoodsMapper.class
 cn\com\hiveview\launcherapi\module\portal\dao\PortalLauncherTempletInfoDao.class
 cn\com\hiveview\launcherapi\module\portal\condition\PortalHomeCondition.class
 cn\com\hiveview\launcherapi\module\portal\controller\PortalLauncherTempletContentController.class
@@ -105,6 +107,7 @@ cn\com\hiveview\launcherapi\module\portal\dao\PortalBeanCurdListDao.class
 cn\com\hiveview\launcherapi\module\portal\dao\CustomRecomTempleteListDao.class
 cn\com\hiveview\launcherapi\module\portal\dao\PortalFixedRecomListDao.class
 cn\com\hiveview\launcherapi\module\portal\dao\TempletApkDao.class
+cn\com\hiveview\launcherapi\module\portal\service\PbGoodsService.class
 cn\com\hiveview\launcherapi\module\portal\service\PortalSysAppIconsListService.class
 cn\com\hiveview\launcherapi\module\portal\util\DynamicDataSource.class
 cn\com\hiveview\launcherapi\module\portal\service\NewTempletAkpService.class
@@ -161,6 +164,7 @@ cn\com\hiveview\launcherapi\module\portal\service\PortalScreenBigPicsListService
 cn\com\hiveview\launcherapi\module\portal\condition\MergeVideoData.class
 cn\com\hiveview\launcherapi\module\portal\service\PortalRecommendListService.class
 cn\com\hiveview\launcherapi\module\portal\service\CustomRecomLayoutService.class
+cn\com\hiveview\launcherapi\module\portal\condition\PbGoodsCondition.class
 cn\com\hiveview\launcherapi\module\portal\controller\PortalTabGroupController.class
 cn\com\hiveview\launcherapi\module\portal\dao\PortalAreaGroupListDao.class
 cn\com\hiveview\launcherapi\module\portal\dao\PortalLauncherTempletTabDao.class
@@ -228,6 +232,7 @@ cn\com\hiveview\launcherapi\module\portal\condition\ActivityFreeVipCondition.cla
 cn\com\hiveview\launcherapi\module\portal\dao\PortalTabDao.class
 cn\com\hiveview\launcherapi\module\portal\service\TempletHotWordService.class
 cn\com\hiveview\launcherapi\module\portal\condition\PortalAreaContentListCondition.class
+cn\com\hiveview\launcherapi\module\portal\controller\PbGoodsController.class
 cn\com\hiveview\launcherapi\module\portal\controller\PortalNotStartInstructionConrtoller.class
 cn\com\hiveview\launcherapi\module\portal\mapper\PortalLauncherTempletMapper.class
 cn\com\hiveview\launcherapi\module\portal\dao\NewTempletApkDao.class

@@ -53,9 +53,10 @@
 		<result column="streams" property="streams" />
 		<result column="sourceTypes" property="sourceTypes" />
 		<result column="flag" property="flag" />
+		<result column="video_desc" property="videoDesc" />
 	</resultMap>
 	<select id="getPageList" parameterType="cn.com.hiveview.launcherapi.module.portal.condition.MergeVideoData" resultMap="programMap" >
-		select distinct v.*,a.album_id,a.album_name from new_merge_video_data v left join new_merge_album_data a on v.belong_album_id = a.album_id left join new_merge_videosource_data s on s.belong_video_id = v.video_id
+		select distinct v.*,a.album_id,a.album_name,video_desc from new_merge_video_data v left join new_merge_album_data a on v.belong_album_id = a.album_id left join new_merge_videosource_data s on s.belong_video_id = v.video_id
 		WHERE
 				v.is_effective =1
         		<if test="videoName != null">

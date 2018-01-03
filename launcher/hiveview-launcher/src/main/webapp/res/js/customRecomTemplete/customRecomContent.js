@@ -460,10 +460,15 @@ function editTempleteContent(id) {
 }
 
 // 页面编辑
-function editLayoutContent(id,w,h,r,c) {
+//推荐位id,宽,高,row,col,flag  0 模板拉过来  1 备份后过来  pFlag  原数据播放标识 0 图片 1视频
+function editLayoutContent(id,w,h,r,c,flag,pFlag) {
     clearCustomContentInfo();
     clearCustomNameInfo();
     $("#layoutId").val(id);
+    $("#w").val(w);
+    $("#h").val(h);
+    $("#r").val(r);
+    $("#c").val(c);
     /*编辑图片大小*/
     var size_y=$('#'+id).attr('data-sizey');
     var size_x=$('#'+id).attr('data-sizex');
@@ -528,15 +533,17 @@ function editLayoutContent(id,w,h,r,c) {
             $('#s').css('display','none');
            s=0;
         }else{
-            $('#t_1').css('display','none');
-            $('#t_2').css('display','none');
+            $('#t_1').css('display','block');
+            $('#t_2').css('display','block');
             $('#t_3').css('display','none');
             $('#t_4').css('display','none');
             $('#s').css('display','block');
             s=1;
         }
-
-
+        if(flag == 1){
+            s =pFlag;
+        }
+        $("#source").val(s);
         $("#customContentTitle").val(contentName);
         $("#customContentId").val(contentId);
         $("#customContentType").val(contentType);
@@ -601,6 +608,11 @@ function customContentSubmit() {
                     $("#action").val('')
                 }else{
                     $("#action").val(dat.actionName);
+                    $("#apkVersionCode").val(dat.versionNo);
+                    $("#apkDownUrl").val(dat.versionUrl);
+                    $("#apk").val(dat.packageName);
+                    $("#installStyle").val(dat.installStyle);
+                    $("#appType").val(dat.appType);
                 }
             }
         });
@@ -946,7 +958,7 @@ function clearCustomNameInfo() {
     $('#name_10').val("");
     $('#name_11').val("");
 }
-function clearLayoutContent(layoutId) {
+function clearLayoutContent(layoutId,s) {
     $("#contentId" + layoutId).val('');
     $("#contentName" + layoutId).val('');
     $("#" + layoutId)
@@ -977,7 +989,7 @@ function clearLayoutContent(layoutId) {
     $("#videoId" + layoutId).val('');
     $("#action" + layoutId).val('');
     $("#apk" + layoutId).val('');
-    $("#isPlay" + layoutId).val(0);
+    $("#isPlay" + layoutId).val(s);
 }
 
 function getCustomMoreList(contentType,url){
@@ -985,6 +997,7 @@ function getCustomMoreList(contentType,url){
 }
 /*备份*/
 function customContentBackups() {
+    var s = $("#source").val();
     var contentId = $("#customContentId").val();
     if(contentId == "" ||contentId == null){
         contentId = -1;
@@ -1023,6 +1036,10 @@ function customContentBackups() {
     var templeteName =$("#templeteName").val();
     var contentName1 = $("#customRecomConTempleteName").val();
     var layoutId = $("#layoutId").val();
+    var w = $("#w").val();
+    var h = $("#h").val();
+    var r = $("#r").val();
+    var c = $("#c").val();
     if(layoutId == null || layoutId == ""){
         alert( '推荐位Id不能为空！');
         return;
@@ -1084,7 +1101,9 @@ function customContentBackups() {
     }
 **/
     var param = {};
-
+    if(isPlay == 0){
+        videoUrl ="";
+    }
     var backupsPparam = {
         'contentId':contentId,
         'contentType' : contentType,
@@ -1120,8 +1139,9 @@ function customContentBackups() {
         $.post(ctx + "/customRecomBackupsList/save", backupsPparam, function(data) {
             if (data.returnValue == 0) {
                 alert( '备份成功！');
-                $("#editCustomContentModal").modal('hide');
-                clearLayoutContent(layoutId);
+                //$("#editCustomContentModal").modal('hide');
+                clearLayoutContent(layoutId,0);
+                editLayoutContent(layoutId,w,h,r,c,1,s);
                 templetContentMap[layoutId] = null;
             } else {
                 alert( '备份失败！');

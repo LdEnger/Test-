@@ -5,15 +5,21 @@
         <id column="id" property="id" />
         <result column="area_name" property="areaName"/>
         <result column="area_title" property="areaTitle"/>
+        <result column="area_template" property="areaTemplate"/>
         <result column="effective" property="effective"/>
         <result column="area_introduce" property="areaIntroduce"/>
         <result column="area_img" property="areaImg" />
+        <result column="background_img" property="backgroundImg"/>
+        <result column="album_pic_type" property="albumPicType"/>
         <result column="create_time" property="createTime"/>
         <result column="update_time" property="updateTime"/>
+        <result column="templete_img" property="templeteImg"/>
     </resultMap>
-
+    <sql id="baseColumns">
+        <![CDATA[id,area_name,area_title,effective,area_introduce,area_img,create_time,update_time]]>
+    </sql>
     <select id="getPage" resultMap="AreaAdminirationMap" parameterType="cn.com.hiveview.launcherapi.module.portal.condition.PortalAreaAdminirationListCondition">
-        SELECT id,area_name,area_title,effective,area_introduce,area_img,create_time,update_time
+        SELECT id,area_name,area_title,area_template,effective,area_introduce,area_img,background_img,album_pic_type,templete_img,create_time,update_time
         FROM portal_area_administration
         <where>
         <if test="areaName != null and areaName != ''">
@@ -23,6 +29,8 @@
             and effective = #{effective}
         </if>
         </where>
+        ORDER BY
+        id DESC
         <if test="pageIndex != null and  pageSize != null">
             limit #{pageIndex},#{pageSize}
         </if>
@@ -42,9 +50,9 @@
 
     <insert id="save" parameterType="cn.com.hiveview.launcherapi.module.portal.condition.PortalAreaAdminirationListCondition">
         INSERT  INTO
-        portal_area_administration(area_name,area_title,effective,area_introduce,area_img,create_time,update_time)
+        portal_area_administration(area_name,area_title,effective,area_introduce,area_img,album_pic_type,background_img,area_template,templete_img,create_time,update_time)
         VALUES
-         (#{areaName},#{areaTitle},#{effective},#{areaIntroduce},#{areaImg},NOW(),NOW())
+         (#{areaName},#{areaTitle},0,#{areaIntroduce},#{areaImg},#{albumPicType},#{backgroundImg},#{areaTemplate},#{templeteImg},NOW(),NOW())
     </insert>
 
     <delete id="delete" parameterType="cn.com.hiveview.launcherapi.module.portal.condition.PortalAreaAdminirationListCondition">
@@ -69,6 +77,18 @@
             </if>
             <if test="areaImg != null and areaImg != ''">
                 area_img = #{areaImg},
+            </if>
+            <if test="backgroundImg != null and backgroundImg != ''">
+                background_img = #{backgroundImg},
+            </if>
+            <if test="albumPicType != null and albumPicType != ''">
+                album_pic_type = #{albumPicType},
+            </if>
+            <if test="areaTemplate != null and areaTemplate != ''">
+                area_template = #{areaTemplate},
+            </if>
+            <if test="templeteImg != null and templeteImg != ''">
+                templete_img = #{templeteImg},
             </if>
             update_time = NOW()
         </set>

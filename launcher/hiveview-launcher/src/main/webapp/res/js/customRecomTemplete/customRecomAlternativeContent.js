@@ -396,6 +396,34 @@ var col12 = [ {
         return value;
     }
 }];
+
+//新商品包
+var col14 = [ {
+    field : 'id',
+    title : '内容ID',
+    width : '8%',
+    align : 'center',
+    formatter : function(value, row, index) {
+        return value;
+    }
+},{
+    field : 'goodsName',
+    title : '商品包名称',
+    width : '10%',
+    align : 'center',
+    formatter : function(value, row, index) {
+        return value;
+    }
+},{
+    field : 'imgUrl',
+    title : '图片',
+    width : '10%',
+    align : 'center',
+    formatter : function(value, row, index) {
+        return "<img style='height:30px;width:30px;' src='"
+            + value + "' />";
+    }
+}];
 function initCustomCombobox() {
     initActivitiesType();
     initAppType();
@@ -874,8 +902,8 @@ function initCustomMoreTable(contentType,url) {
                     $('#s').css('display','none');
                     $("#isPlay").attr("disabled",true);
                 }else{
-                    $('#t_1').css('display','none');
-                    $('#t_2').css('display','none');
+                    $('#t_1').css('display','block');
+                    $('#t_2').css('display','block');
                     $('#t_3').css('display','none');
                     $('#t_4').css('display','none');
                     $('#s').css('display','block');
@@ -1115,6 +1143,27 @@ function initCustomMoreTable(contentType,url) {
                 $('#installStyle').val(row.installStyle);
                 $('#appType').val(row.appType);
             }
+
+            //新商品包
+            if(contentType == 14){
+                $('#customContentId').val(row.id);
+                $('#customContentTitle').val(row.goodsName);
+                /* $('#txt_title').val(row.name);*/
+                $('#customRecomContentImg').attr('src', row.imgUrl);
+                $('#contentBigPic').attr('src', '');
+                $('#categoryId').val('');
+                $('#chnId').val('');
+                $('#chnType').val('');
+                $('#hotId').val('');
+                $('#hotType').val('');
+                $('#aqyIsVip').val('');
+                $('#apkBagName').val('');
+                $('#specSn').val('');
+                $('#apkVersionCode').val('');
+                $('#apkDownUrl').val('');
+                $('#videoId').val('');
+                $('#apk').val('');
+            }
             var title = $('#customContentTitle').val();
             $("#customContentSubtitle").attr("disabled",false);
         }
@@ -1147,6 +1196,7 @@ function dataCustomSource(){
         $('#div_'+10).css('display','none');
         $('#div_'+11).css('display','none');
         $('#div_'+12).css('display','none');
+        $('#div_'+14).css('display','none');
         getCustomMoreList(6,"/bigPics/getList");
     }
     //专辑详情
@@ -1199,6 +1249,7 @@ function dataCustomSource(){
         $('#div_'+10).css('display','none');
         $('#div_'+11).css('display','none');
         $('#div_'+12).css('display','none');
+        $('#div_'+14).css('display','none');
         getCustomMoreList(1,"/portal/newContentChan/getNewContentChanPageList");
     }
     //影视专题
@@ -1222,6 +1273,7 @@ function dataCustomSource(){
         $('#div_'+10).css('display','none');
         $('#div_'+11).css('display','none');
         $('#div_'+12).css('display','none');
+        $('#div_'+14).css('display','none');
         getCustomMoreList(0,"/compositeSubject/getPageList");
     }
     //应用详情
@@ -1243,6 +1295,7 @@ function dataCustomSource(){
         $('#div_'+10).css('display','none');
         $('#div_'+11).css('display','none');
         $('#div_'+12).css('display','none');
+        $('#div_'+14).css('display','none');
         getCustomMoreList(2,"/app/getPageList");
     }
     //应用专题
@@ -1264,6 +1317,7 @@ function dataCustomSource(){
         $('#div_'+10).css('display','none');
         $('#div_'+11).css('display','none');
         $('#div_'+12).css('display','none');
+        $('#div_'+14).css('display','none');
         getCustomMoreList(3,"/cloudAppSubject/getPageList");
     }
     //活动详情
@@ -1282,6 +1336,7 @@ function dataCustomSource(){
         $('#div_'+10).css('display','none');
         $('#div_'+11).css('display','none');
         $('#div_'+12).css('display','none');
+        $('#div_'+14).css('display','none');
         getCustomMoreList(4,"/activityFreeVip/getPageList");
     }
     //商品包
@@ -1301,6 +1356,7 @@ function dataCustomSource(){
         $('#div_'+10).css('display','none');
         $('#div_'+11).css('display','none');
         $('#div_'+12).css('display','none');
+        $('#div_'+14).css('display','none');
         getCustomMoreList(7,"/portal/onlineGoods/getPageList");
     }
     //优购专题
@@ -1319,6 +1375,7 @@ function dataCustomSource(){
         $('#div_'+10).css('display','none');
         $('#div_'+11).css('display','none');
         $('#div_'+12).css('display','none');
+        $('#div_'+14).css('display','none');
         getCustomMoreList(8,"/portal/youGouSpecials/getPageList");
     }
     //优购详情
@@ -1339,6 +1396,7 @@ function dataCustomSource(){
         $('#div_'+10).css('display','none');
         $('#div_'+11).css('display','none');
         $('#div_'+12).css('display','none');
+        $('#div_'+14).css('display','none');
         getCustomMoreList(9,"/portal/youGouGoods/getPageList");
     }
     //tab
@@ -1358,6 +1416,7 @@ function dataCustomSource(){
         $('#div_'+10).css('display','block');
         $('#div_'+11).css('display','none');
         $('#div_'+12).css('display','none');
+        $('#div_'+14).css('display','none');
         getCustomMoreList(10,"/tab/getPageList");
     }
     //会员活动
@@ -1378,6 +1437,7 @@ function dataCustomSource(){
         $('#div_'+10).css('display','none');
         $('#div_'+11).css('display','block');
         $('#div_'+12).css('display','none');
+        $('#div_'+14).css('display','none');
         getCustomMoreList(11,"/portal/activity/getPageList");
     }
     //启动应用(豆腐块)
@@ -1396,7 +1456,27 @@ function dataCustomSource(){
         $('#div_'+10).css('display','none');
         $('#div_'+11).css('display','none');
         $('#div_'+12).css('display','block');
+        $('#div_'+14).css('display','none');
         getCustomMoreList(12,"/PortalNotStartInstruction/getPageList");
+    }
+    //新商品包
+    if(contentType == 14){
+        moreCustomParam ={};
+        moreCustomParam['goodsName'] =$("#name_14").val();
+        $('#div_'+0).css('display','none');
+        $('#div_'+1).css('display','none');
+        $('#div_'+2).css('display','none');
+        $('#div_'+3).css('display','none');
+        $('#div_'+4).css('display','none');
+        $('#div_'+6).css('display','none');
+        $('#div_'+7).css('display','none');
+        $('#div_'+8).css('display','none');
+        $('#div_'+9).css('display','none');
+        $('#div_'+10).css('display','none');
+        $('#div_'+11).css('display','none');
+        $('#div_'+12).css('display','none');
+        $('#div_'+14).css('display','block');
+        getCustomMoreList(14,"/portal/pbGoods/getPageList");
     }
 
 }
@@ -1424,6 +1504,7 @@ function selectCustomData(){
         $('#div_'+10).css('display','none');
         $('#div_'+11).css('display','none');
         $('#div_'+12).css('display','none');
+        $('#div_'+14).css('display','none');
         getCustomMoreList(6,"/bigPics/getList");
     }
     //专辑详情
@@ -1476,6 +1557,7 @@ function selectCustomData(){
         $('#div_'+10).css('display','none');
         $('#div_'+11).css('display','none');
         $('#div_'+12).css('display','none');
+        $('#div_'+14).css('display','none');
         getCustomMoreList(1,"/portal/newContentChan/getNewContentChanPageList");
     }
     //影视专题
@@ -1498,6 +1580,7 @@ function selectCustomData(){
         $('#div_'+10).css('display','none');
         $('#div_'+11).css('display','none');
         $('#div_'+12).css('display','none');
+        $('#div_'+14).css('display','none');
         getCustomMoreList(0,"/compositeSubject/getPageList");
     }
     //应用详情
@@ -1518,6 +1601,7 @@ function selectCustomData(){
         $('#div_'+10).css('display','none');
         $('#div_'+11).css('display','none');
         $('#div_'+12).css('display','none');
+        $('#div_'+14).css('display','none');
         getCustomMoreList(2,"/app/getPageList");
     }
     //应用专题
@@ -1537,6 +1621,7 @@ function selectCustomData(){
         $('#div_'+10).css('display','none');
         $('#div_'+11).css('display','none');
         $('#div_'+12).css('display','none');
+        $('#div_'+14).css('display','none');
         getCustomMoreList(3,"/cloudAppSubject/getPageList");
     }
     //活动详情
@@ -1555,6 +1640,7 @@ function selectCustomData(){
         $('#div_'+10).css('display','none');
         $('#div_'+11).css('display','none');
         $('#div_'+12).css('display','none');
+        $('#div_'+14).css('display','none');
         getCustomMoreList(4,"/activityFreeVip/getPageList");
     }
     //商品包
@@ -1573,6 +1659,7 @@ function selectCustomData(){
         $('#div_'+10).css('display','none');
         $('#div_'+11).css('display','none');
         $('#div_'+12).css('display','none');
+        $('#div_'+14).css('display','none');
         getCustomMoreList(7,"/portal/onlineGoods/getPageList");
     }
     //优购专题
@@ -1591,6 +1678,7 @@ function selectCustomData(){
         $('#div_'+10).css('display','none');
         $('#div_'+11).css('display','none');
         $('#div_'+12).css('display','none');
+        $('#div_'+14).css('display','none');
         getCustomMoreList(8,"/portal/youGouSpecials/getPageList");
     }
     //优购详情
@@ -1611,6 +1699,7 @@ function selectCustomData(){
         $('#div_'+10).css('display','none');
         $('#div_'+11).css('display','none');
         $('#div_'+12).css('display','none');
+        $('#div_'+14).css('display','none');
         getCustomMoreList(9,"/portal/youGouGoods/getPageList");
     }
     //tab
@@ -1630,6 +1719,7 @@ function selectCustomData(){
         $('#div_'+10).css('display','block');
         $('#div_'+11).css('display','none');
         $('#div_'+12).css('display','none');
+        $('#div_'+14).css('display','none');
         getCustomMoreList(10,"/tab/getPageList");
     }
     //会员活动
@@ -1650,6 +1740,7 @@ function selectCustomData(){
         $('#div_'+10).css('display','none');
         $('#div_'+11).css('display','block');
         $('#div_'+12).css('display','none');
+        $('#div_'+14).css('display','none');
         getCustomMoreList(11,"/portal/activity/getPageList");
     }
     //启动应用(豆腐块)
@@ -1668,7 +1759,27 @@ function selectCustomData(){
         $('#div_'+10).css('display','none');
         $('#div_'+11).css('display','none');
         $('#div_'+12).css('display','block');
+        $('#div_'+14).css('display','none');
         getCustomMoreList(12,"/PortalNotStartInstruction/getPageList");
+    }
+    //启动应用(豆腐块)
+    if(contentType == 14){
+        moreCustomParam ={};
+        moreCustomParam['goodsName'] =$("#name_14").val();
+        $('#div_'+0).css('display','none');
+        $('#div_'+1).css('display','none');
+        $('#div_'+2).css('display','none');
+        $('#div_'+3).css('display','none');
+        $('#div_'+4).css('display','none');
+        $('#div_'+6).css('display','none');
+        $('#div_'+7).css('display','none');
+        $('#div_'+8).css('display','none');
+        $('#div_'+9).css('display','none');
+        $('#div_'+10).css('display','none');
+        $('#div_'+11).css('display','none');
+        $('#div_'+12).css('display','none');
+        $('#div_'+14).css('display','block');
+        getCustomMoreList(14,"/portal/pbGoods/getPageList");
     }
     $('#editcontent_myModal').modal();
 }
@@ -1681,8 +1792,8 @@ function changeShow(){
         $('#t_4').css('display','block');
         $('#s').css('display','none');
     }else{
-        $('#t_1').css('display','none');
-        $('#t_2').css('display','none');
+        $('#t_1').css('display','block');
+        $('#t_2').css('display','block');
         $('#t_3').css('display','none');
         $('#t_4').css('display','none');
         $('#s').css('display','block');

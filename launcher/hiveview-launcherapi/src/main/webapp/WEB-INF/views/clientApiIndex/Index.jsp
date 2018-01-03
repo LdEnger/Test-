@@ -459,6 +459,7 @@
     <li><a href="#/hiveview-launcherapi/Navigation/getDefaultTapPic" title="Tab默认背景地址">/hiveview-launcherapi/Navigation/getDefaultTapPic</a>(获取Tab默认图片地址)
     <li><a href="#/hiveview-launcherapi/portalTabGroup/getList" title="根据导航栏ID获取GroupList">/hiveview-launcherapi/portalTabGroup/getList</a>(根据导航栏ID获取GroupList)
     <li><a href="#/hiveview-launcherapi/PortalDataGroupController/getDataGroupList" title="智能推荐/猜你喜欢Group接口">/hiveview-launcherapi/PortalDataGroupController/getDataGroupList</a>(智能推荐/猜你喜欢Group接口)
+    <li><a href="#/hiveview-launcherapi/PortalAreaContenController/getAreaContentList" title="专区详情接口">/hiveview-launcherapi/PortalAreaContenController/getAreaContentList</a>(根据专区ID获取专区信息)
      <%--<li><a href="#/hiveview-launcherapi/unbundling/unbundlingList" title="下线通知接口">/hiveview-launcherapi/unbundling/unbundlingList</a>(下线通知接口 ps:供测试同学测试专用)--%>
 </ol>
 
@@ -1189,6 +1190,63 @@
     <%--</div>--%>
     <%--<div class="return_area"></div>--%>
 <%--</div>--%>
+
+<a name="/hiveview-launcherapi/PortalAreaContenController/getAreaContentList"></a>
+
+<div class="api_block">
+    <div class="api_name">
+        接口名称： <span id="api_name">/hiveview-launcherapi/PortalAreaContenController/getAreaContentList</span>
+        <span style="float: right; font-size: 12px;">[<a href="#" title="TOP" style="color: #FFF; text-decoration: none;">↑</a>] </span>
+    </div>
+    <div class="api_method">
+        请求方式： <span id="api_method">GET</span>
+    </div>
+    <div class="api_url">接口地址：http://{Server}/hiveview-launcherapi/PortalAreaContenController/getAreaContentList/{id}/{page}/{size}/{version}.json</div>
+    <div class="api_desc">接口说明： 根据专区ID获取专区信息</div>
+    <div class="api_result">
+        返回值说明：<a href="#/RespCode" title="状态码">响应状态码</a>
+        <ul>
+            <li>areaId:专题ID</li>
+            <li>areaName:专题名称</li>
+            <li>areaTitle:专题标题名称</li>
+            <li>areaIntroduce:专题描述</li>
+            <li>backgroundImg:专题背景图片</li>
+            <li>albumPicType:推荐位样式(0.横图 1.竖图)</li>
+            <li>areaRemplate:专区模板(1.模板1)</li>
+            <li>page:当前的页码值</li>
+            <li>size:大小</li>
+            <li>version:版本号</li>
+            <li>list - contentId:内容id  </li>
+            <li>list - contentName:内容名称</li>
+            <li>list - areaContent:影片详情</li>
+            <li>list - channel:频道Id</li>
+            <li>list - recommendImg:推荐位图片</li>
+            <li>list - recommendType:推荐位跳转类型(1.专辑详情 2.直播)</li>
+            <li>list - packageName:包名 </li>
+        </ul>
+    </div>
+    <div class="api_params">
+        参数列表： <br/> <br/>
+        <div id="params_list">
+            id = <input type="text" name="id" value=""><span class="notes">专区Id</span><br/>
+            page = <input type="text" name="page" value=""><span class="notes">当前页数</span><br/>
+            size = <input type="text" name="size" value=""><span class="notes">每页矩阵组数量</span><br/>
+            version = <input type="text" name="version" value=""><span class="notes">版本号</span><br/>
+        </div>
+        <input type="button" class="api_test_btn" value="测试接口"/>
+    </div>
+    <div class="return_area"></div>
+</div>
+
+
+
+
+
+
+
+
+
+
 
 
 <div class="api_block">

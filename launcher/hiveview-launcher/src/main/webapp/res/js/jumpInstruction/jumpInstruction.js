@@ -60,6 +60,17 @@ function initTable() {
             formatter : function(value, row, index) {
                 return value;
             }
+        },{
+            field : 'startApkName',
+            title : 'APK名称',
+            width : '20%',
+            align : 'center',
+            formatter : function(value, row, index) {
+                if(value<0){
+                    return "";
+                }
+                return value;
+            }
         }, {
             field : 'effective',
             title : '状态',
@@ -83,7 +94,7 @@ function initTable() {
             align : 'center',
             formatter : function(value, row) {
                 var str = '';
-                str += '<a href="javascript:editJumpInstruction('+row.id+",'"+row.type+"','"+row.actionName+"'"+')">编辑</a>';
+                str += '<a href="javascript:editJumpInstruction('+row.id+",'"+row.type+"','"+row.actionName+"',"+row.startApk+')">编辑</a>';
                 str += '&nbsp;|&nbsp; <a href="javascript:delJumpInstruction(' + row.id + ')">删除</a>';
                 return str;
             }
@@ -107,21 +118,44 @@ var flag='0';
 /*添加按钮*/
 function addJumpInstruction() {
     flag='1';
+    option();
     $('#id').val("").removeAttr("readonly");
     $('#type').val("");
     $('#actionName').val("");
+    $('#txt_startApk').val(-1);
     $('#editJumpInstructionDiv').modal({backdrop: 'static', keyboard: false});
     $('#editJumpInstructionDiv').modal('show');
 }
 /*编辑按钮*/
-function editJumpInstruction(id,type,actionName) {
+function editJumpInstruction(id,type,actionName,startApk) {
     flag='0'
+    option();
     console.log(id);
     $('#id').val(id).attr("readonly","readonly");
     $('#type').val(type);
     $('#actionName').val(actionName);
+    $('#txt_startApk').val(startApk);
     $('#editJumpInstructionDiv').modal({backdrop: 'static', keyboard: false});
     $('#editJumpInstructionDiv').modal('show');
+}
+//下拉菜单数据初始化
+function option() {
+    var id = '';
+    $.ajax({
+        type: "post",
+        async : false,
+        url : ctx + "/apk/getComboboxList",
+        dataType:"json",
+        data : {'id': id},
+        success: function (res) {
+            $("#txt_startApk").empty();
+            $("#txt_startApk").append("<option value='-1'>不填</option>");
+            $.each(res ,function (index,element) {
+                var options = $("<option value ='" + element['id'] +"'>" + element['apkName'] + "</option>");
+                $("#txt_startApk").append(options);
+            })
+        }
+    });
 }
 /*删除按钮*/
 function delJumpInstruction(id) {
@@ -178,8 +212,8 @@ function upJumpInstruction(id) {
 function submitJumpInstructionInfo() {
     var id =  $('#id').val();
     var type = $('#type').val();
-    var actionName = $('#actionName').val()
-
+    var actionName = $('#actionName').val();
+    var startApk = $("#txt_startApk").val();
     if (id == "") {
         alert( 'id不能为空！');
         return;
@@ -199,6 +233,7 @@ function submitJumpInstructionInfo() {
         'id':id,
         'type':type,
         'actionName' : actionName,
+        'startApk':startApk
     };
     $.post(ctx + "/jumpInstruction/getPageList?page=1&rows=1&type="+type, function(data) {
         var a = data.rows;

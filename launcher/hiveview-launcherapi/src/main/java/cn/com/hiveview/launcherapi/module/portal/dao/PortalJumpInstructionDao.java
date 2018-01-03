@@ -1,5 +1,6 @@
 package cn.com.hiveview.launcherapi.module.portal.dao;
 
+import cn.com.hiveview.entity.module.portal.PortalJumpInstructionVo;
 import cn.com.hiveview.launcherapi.module.portal.condition.PortalJumpInstructionCondition;
 import cn.com.hiveview.launcherapi.module.portal.mapper.PortalJumpInstructionMapper;
 import org.apache.ibatis.session.SqlSessionFactory;
@@ -10,7 +11,7 @@ import org.springframework.stereotype.Repository;
 
 import javax.annotation.Resource;
 import java.util.List;
-import java.util.concurrent.locks.Condition;
+
 
 /**
  * Created by xiach on 2017/10/8.
@@ -42,5 +43,7 @@ public class PortalJumpInstructionDao extends SqlSessionDaoSupport {
     public Integer update(PortalJumpInstructionCondition condition){return portalJumpInstructionMapper.update(condition);}
 
     public PortalJumpInstructionCondition getOne(PortalJumpInstructionCondition condition){return portalJumpInstructionMapper.getOne(condition);};
-    public PortalJumpInstructionCondition getActionById(PortalJumpInstructionCondition condition){return portalJumpInstructionMapper.getActionById(condition);};
+    public PortalJumpInstructionVo getActionById(PortalJumpInstructionCondition condition){return portalJumpInstructionMapper.getActionById(condition);};
+    public List<PortalJumpInstructionVo> getInfoByStartApk(PortalJumpInstructionCondition condition){return portalJumpInstructionMapper.getInfoByStartApk(condition);}
+
 }

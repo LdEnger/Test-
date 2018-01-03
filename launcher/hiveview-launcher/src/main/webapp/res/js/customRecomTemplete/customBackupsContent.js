@@ -272,6 +272,35 @@ function submitBackupsContentInfo() {
     var id =  $("#id").val();
     var contentId = $("#customContentId").val();
     var contentType =  $("#customContentType").val();
+    //这段逻辑新加===
+    if(contentType != 12){
+        $.ajax({
+            async : false,
+            type : "get",
+            url : ctx+"/jumpInstruction/getActionById",
+            dataType : "json",
+            data : {"id":contentType},
+            success : function(jsonData) {
+                var dat = jsonData;
+                if(dat == null){
+                    $("#action").val('')
+                }else{
+                    $("#action").val(dat.actionName);
+                    $("#apkVersionCode").val(dat.versionNo);
+                    $("#apkDownUrl").val(dat.versionUrl);
+                    $("#apk").val(dat.packageName);
+                    $("#installStyle").val(dat.installStyle);
+                    $("#appType").val(dat.appType);
+                }
+            }
+        });
+    }
+    var action = $("#action").val();
+    if (contentId != -1 && (action == null || action == "")) {
+        alert( '请检查跳转action是否配置！');
+        return;
+    }
+    //这段逻辑新加===
     var contentName = $("#customContentTitle").val();
     var contentSubtitle = $("#customContentSubtitle").val();
     var customContentImgSel = $("#customContentImgSel").val();
@@ -312,17 +341,22 @@ function submitBackupsContentInfo() {
     var apk =$("#apk").val();
     var templeteId =$("#templeteId").val();
     var isPlay =$("#isPlay").val();
+    var installStyle =$("#installStyle").val();
+    var appType =$("#appType").val();
     var count = 0;
-    var contentImgUrl = contentImg.substring(contentImg.length-4,contentImg.length + 1);
+    //var contentImgUrl = contentImg.substring(contentImg.length-4,contentImg.length + 1);
 
     // if ($.trim(contentName) == "") {
     //     alert( '内容名称不能为空！');
     //     return;
     // }
 
-    if(isPlay == 0 &&contentImg ==null){
-        alert("请上传图片");
-        return;
+    // if(isPlay == 0 &&contentImg ==null){
+    //     alert("请上传图片");
+    //     return;
+    // }
+    if(isPlay == 0){
+        videoUrl = "";
     }
     $.ajax({
         async : false,
@@ -366,7 +400,9 @@ function submitBackupsContentInfo() {
         'videoId':videoId,
         'videoUrl':videoUrl,
         'action':action,
-        'apk':apk
+        'apk':apk,
+        'installStyle':installStyle,
+        'appType':appType
     };
     if(id !=null && id !=''){
         $.post(ctx + "/customRecomBackupsList/update", backupsPparam, function(data) {
@@ -411,8 +447,8 @@ function editBackupsContent(id,layoutId) {
         $('#templeteId').val(data.templeteId);//模板
         $('#isPlay').val(data.isPlay);
         if(data.isPlay == 1){
-            $('#t_1').css('display','none');
-            $('#t_2').css('display','none');
+            $('#t_1').css('display','block');
+            $('#t_2').css('display','block');
             $('#t_3').css('display','none');
             $('#t_4').css('display','none');
             $('#s').css('display','block');

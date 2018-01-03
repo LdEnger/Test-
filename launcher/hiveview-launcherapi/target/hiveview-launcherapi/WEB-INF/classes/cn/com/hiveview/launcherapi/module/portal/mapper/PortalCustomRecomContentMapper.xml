@@ -335,27 +335,30 @@
         UPDATE
         portal_custom_recom_content
         <set>
-            <if test="apkVersionCode != null">
+            <!--<if test="apkVersionCode != null">-->
                 apk_version_code = #{apkVersionCode},
-            </if>
-            <if test="apkDownUrl != null">
+            <!--</if>-->
+            <!--<if test="apkDownUrl != null">-->
                 apk_down_url = #{apkDownUrl},
-            </if>
-            <if test="action != null">
+            <!--</if>-->
+            <!--<if test="action != null">
                 action = #{action},
-            </if>
-            <if test="installStyle != null">
+            </if>-->
+            <!--<if test="installStyle != null">-->
                 install_style = #{installStyle},
-            </if>
-            <if test="appType != null">
+            <!--</if>-->
+            <!--<if test="appType != null">-->
                 app_type = #{appType},
-            </if>
-            <if test="apk != null">
+            <!--</if>-->
+            <!--<if test="apk != null">-->
                 apk = #{apk},
-            </if>
+            <!--</if>-->
             update_time = #{updateTime}
         </set>
-        WHERE content_id=#{contentId} AND content_type=#{contentType}
+        WHERE  content_type=#{contentType}
+        <if test="contentId != null">
+            and content_id=#{contentId}
+        </if>
     </update>
 
     <update id="updateBackUpVersion" parameterType="cn.com.hiveview.launcherapi.module.portal.condition.PortalCustomRecomContentCondition">
@@ -368,9 +371,9 @@
             <if test="apkDownUrl != null">
                 apk_down_url = #{apkDownUrl},
             </if>
-            <if test="action != null">
+            <!--<if test="action != null">
                 action = #{action},
-            </if>
+            </if>-->
             <if test="installStyle != null">
                 install_style = #{installStyle},
             </if>
@@ -382,6 +385,9 @@
             </if>
             update_time = #{updateTime}
         </set>
-        WHERE content_id=#{contentId} AND content_type=#{contentType}
+        WHERE content_type=#{contentType}
+        <if test="contentId != null">
+            and content_id=#{contentId}
+        </if>
     </update>
 </mapper>

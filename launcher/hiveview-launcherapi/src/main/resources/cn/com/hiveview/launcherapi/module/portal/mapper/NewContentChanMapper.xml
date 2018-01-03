@@ -165,7 +165,7 @@
     </sql>
     <select id="getPageList" resultMap="newContentChanMap"
             parameterType="cn.com.hiveview.launcherapi.module.portal.condition.NewContentChanCondition">
-        select programset_id,album_name,album_hb_pic,album_xqy_pic,album_x_pic,album_slt_pic,aqy_id,jq_id,third_id,hkdb_id,aqy_is_effective,jq_is_effective,third_is_effective,hkdb_is_effective,is_effective,status,apk_bag_name,pre_m3u8,chn_id,chn_name,chn_type,is_vip,charging_type,aqy_is_vip,is_tvod,focus
+        select programset_id,album_name,album_hb_pic,album_desc,album_xqy_pic,album_x_pic,album_slt_pic,aqy_id,jq_id,third_id,hkdb_id,aqy_is_effective,jq_is_effective,third_is_effective,hkdb_is_effective,is_effective,status,apk_bag_name,pre_m3u8,chn_id,chn_name,chn_type,is_vip,charging_type,aqy_is_vip,is_tvod,focus,templet_id
         FROM new_content_chan ncc
         <include refid="findPageWhere"/>
         order by ncc.up_time desc
@@ -324,5 +324,9 @@
         </where>
     </select>
 
-
+    <select id="getOneChan" resultType="cn.com.hiveview.launcherapi.module.portal.condition.NewContentChanCondition"
+            parameterType="cn.com.hiveview.launcherapi.module.portal.condition.NewContentChanCondition">
+        select programset_id as programsetId,album_name as albumName,album_hb_pic as albumHbPic,album_desc as albumDesc
+        FROM new_content_chan WHERE programset_id=#{programsetId} limit 1
+    </select>
 </mapper>

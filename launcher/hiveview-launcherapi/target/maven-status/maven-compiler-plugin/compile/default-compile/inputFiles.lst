@@ -29,6 +29,7 @@ D:\PDD\Hiveview\launcher\hiveview-launcherapi\src\main\java\cn\com\hiveview\laun
 D:\PDD\Hiveview\launcher\hiveview-launcherapi\src\main\java\cn\com\hiveview\launcherapi\module\portal\service\PortalBeanCurdListService.java
 D:\PDD\Hiveview\launcher\hiveview-launcherapi\src\main\java\cn\com\hiveview\launcherapi\module\portal\condition\PortalScreenBigPicsListCondition.java
 D:\PDD\Hiveview\launcher\hiveview-launcherapi\src\main\java\cn\com\hiveview\launcherapi\module\portal\service\TempletApkChannelService.java
+D:\PDD\Hiveview\launcher\hiveview-launcherapi\src\main\java\cn\com\hiveview\launcherapi\module\portal\dao\PbGoodsDao.java
 D:\PDD\Hiveview\launcher\hiveview-launcherapi\src\main\java\cn\com\hiveview\launcherapi\module\portal\mapper\NewTempletChannelWordsMapper.java
 D:\PDD\Hiveview\launcher\hiveview-launcherapi\src\main\java\cn\com\hiveview\launcherapi\module\portal\controller\CompositeSubjectController.java
 D:\PDD\Hiveview\launcher\hiveview-launcherapi\src\main\java\cn\com\hiveview\launcherapi\module\portal\mapper\PortalBeanCurdMappingListMapper.java
@@ -66,6 +67,7 @@ D:\PDD\Hiveview\launcher\hiveview-launcherapi\src\main\java\cn\com\hiveview\laun
 D:\PDD\Hiveview\launcher\hiveview-launcherapi\src\main\java\cn\com\hiveview\launcherapi\module\portal\dao\TempletApkChannelDao.java
 D:\PDD\Hiveview\launcher\hiveview-launcherapi\src\main\java\cn\com\hiveview\launcherapi\module\portal\mapper\CustomRecomLayoutMapper.java
 D:\PDD\Hiveview\launcher\hiveview-launcherapi\src\main\java\cn\com\hiveview\launcherapi\module\portal\condition\PortalFixedRecomContentCondition.java
+D:\PDD\Hiveview\launcher\hiveview-launcherapi\src\main\java\cn\com\hiveview\launcherapi\module\portal\condition\PbGoodsCondition.java
 D:\PDD\Hiveview\launcher\hiveview-launcherapi\src\main\java\cn\com\hiveview\launcherapi\module\portal\mapper\UnbundlingMapper.java
 D:\PDD\Hiveview\launcher\hiveview-launcherapi\src\main\java\cn\com\hiveview\launcherapi\module\portal\controller\PortalTabGroupController.java
 D:\PDD\Hiveview\launcher\hiveview-launcherapi\src\main\java\cn\com\hiveview\launcherapi\module\portal\mapper\PortalLauncherTempletMapper.java
@@ -82,6 +84,7 @@ D:\PDD\Hiveview\launcher\hiveview-launcherapi\src\main\java\cn\com\hiveview\laun
 D:\PDD\Hiveview\launcher\hiveview-launcherapi\src\main\java\cn\com\hiveview\launcherapi\module\portal\mapper\PortalBeanCurdMapper.java
 D:\PDD\Hiveview\launcher\hiveview-launcherapi\src\main\java\cn\com\hiveview\launcherapi\module\portal\controller\PortalLauncherTempletTabController.java
 D:\PDD\Hiveview\launcher\hiveview-launcherapi\src\main\java\cn\com\hiveview\launcherapi\module\portal\mapper\PortalScreenRecommendListMapper.java
+D:\PDD\Hiveview\launcher\hiveview-launcherapi\src\main\java\cn\com\hiveview\launcherapi\module\portal\controller\PbGoodsController.java
 D:\PDD\Hiveview\launcher\hiveview-launcherapi\src\main\java\cn\com\hiveview\launcherapi\module\portal\service\CustomRecomGetLayoutService.java
 D:\PDD\Hiveview\launcher\hiveview-launcherapi\src\main\java\cn\com\hiveview\launcherapi\module\portal\mapper\PortalTabGroupMapper.java
 D:\PDD\Hiveview\launcher\hiveview-launcherapi\src\main\java\cn\com\hiveview\launcherapi\module\portal\mapper\TempletHotWordMapper.java
@@ -152,6 +155,7 @@ D:\PDD\Hiveview\launcher\hiveview-launcherapi\src\main\java\cn\com\hiveview\laun
 D:\PDD\Hiveview\launcher\hiveview-launcherapi\src\main\java\cn\com\hiveview\launcherapi\module\portal\condition\EntranceAreaCondition.java
 D:\PDD\Hiveview\launcher\hiveview-launcherapi\src\main\java\cn\com\hiveview\launcherapi\module\portal\dao\AppTagDao.java
 D:\PDD\Hiveview\launcher\hiveview-launcherapi\src\main\java\cn\com\hiveview\launcherapi\module\portal\controller\CustomRecomTempleteController.java
+D:\PDD\Hiveview\launcher\hiveview-launcherapi\src\main\java\cn\com\hiveview\launcherapi\module\portal\mapper\PbGoodsMapper.java
 D:\PDD\Hiveview\launcher\hiveview-launcherapi\src\main\java\cn\com\hiveview\launcherapi\module\portal\service\EntranceAreaService.java
 D:\PDD\Hiveview\launcher\hiveview-launcherapi\src\main\java\cn\com\hiveview\launcherapi\module\portal\service\PortalLauncherTempletInfoService.java
 D:\PDD\Hiveview\launcher\hiveview-launcherapi\src\main\java\cn\com\hiveview\launcherapi\module\portal\mapper\PortalVipLogoMapper.java
@@ -215,6 +219,7 @@ D:\PDD\Hiveview\launcher\hiveview-launcherapi\src\main\java\cn\com\hiveview\laun
 D:\PDD\Hiveview\launcher\hiveview-launcherapi\src\main\java\cn\com\hiveview\launcherapi\module\portal\mapper\CloudAppSubjectMapper.java
 D:\PDD\Hiveview\launcher\hiveview-launcherapi\src\main\java\cn\com\hiveview\launcherapi\module\portal\controller\NewContentChanController.java
 D:\PDD\Hiveview\launcher\hiveview-launcherapi\src\main\java\cn\com\hiveview\launcherapi\module\portal\dao\ActivityDao.java
+D:\PDD\Hiveview\launcher\hiveview-launcherapi\src\main\java\cn\com\hiveview\launcherapi\module\portal\service\PbGoodsService.java
 D:\PDD\Hiveview\launcher\hiveview-launcherapi\src\main\java\cn\com\hiveview\launcherapi\module\portal\condition\PortalTabGroupCondition.java
 D:\PDD\Hiveview\launcher\hiveview-launcherapi\src\main\java\cn\com\hiveview\launcherapi\module\portal\service\NewVipActivityService.java
 D:\PDD\Hiveview\launcher\hiveview-launcherapi\src\main\java\cn\com\hiveview\launcherapi\module\portal\mapper\LogoLicenseManageListMapper.java

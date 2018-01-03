@@ -128,6 +128,7 @@ public class CustomRecomTempleteListService {
         PortalTabGroupCondition portalTabGroupCondition = new PortalTabGroupCondition();
         CustomRecomBackupsContentCondition customRecomBackupsContentCondition = new CustomRecomBackupsContentCondition();
         portalTabGroupCondition.setBelongGroupId(condition.getTempleteId());
+        portalTabGroupCondition.setGroupType(1);
         portalTabGroupCondition.setGroupName(condition.getContentName());
         portalTabGroupCondition.setGroupTitle( condition.getTempleteTitle());
         portalTabGroupCondition.setGroupBackground(condition.getBackPic());

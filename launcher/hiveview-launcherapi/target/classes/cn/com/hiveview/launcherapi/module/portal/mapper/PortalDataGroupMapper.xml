@@ -88,9 +88,13 @@
             <if test="effective != null">
                 effective = #{effective},
             </if>
+            <if test="hotName != null and hotName != ''">
             hot_name = #{hotName},
+            </if>
             package_name = #{packageName},
+            <if test="channel != null">
             channel = #{channel},
+            </if>
             <if test="width != null">
                 width = #{width},
             </if>
@@ -98,7 +102,10 @@
                 height = #{height},
             </if>
             category_id = #{categoryId},
-            apk_package_name = #{apkPackageName},
+            <if test="apkPackageName != null and apkPackageName != ''">
+                apk_package_name = #{apkPackageName},
+            </if>
+
             channel_type = #{channelType},
             <if test="hotId != null">
                 hot_id = #{hotId},

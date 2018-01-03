@@ -1,10 +1,8 @@
 package cn.com.hiveview.launcherapi.module.portal.service;
 
 import cn.com.hiveview.entity.module.common.ScriptPage;
-import cn.com.hiveview.launcherapi.module.portal.condition.CustomRecomBackupsContentCondition;
-import cn.com.hiveview.launcherapi.module.portal.condition.PortalCustomRecomContentCondition;
-import cn.com.hiveview.launcherapi.module.portal.condition.PortalJumpInstructionCondition;
-import cn.com.hiveview.launcherapi.module.portal.condition.PortalVipLogoCondition;
+import cn.com.hiveview.entity.module.portal.PortalJumpInstructionVo;
+import cn.com.hiveview.launcherapi.module.portal.condition.*;
 import cn.com.hiveview.launcherapi.module.portal.dao.CustomRecomBackupsContentDao;
 import cn.com.hiveview.launcherapi.module.portal.dao.PortalCustomRecomContentDao;
 import cn.com.hiveview.launcherapi.module.portal.dao.PortalJumpInstructionDao;
@@ -25,6 +23,8 @@ public class PortalJumpInstructionService {
     private PortalCustomRecomContentDao portalCustomRecomContentDao;
     @Autowired
     private CustomRecomBackupsContentDao customRecomBackupsContentDao;
+    @Autowired
+    private PortalNotStartInstructionService portalNotStartInstructionService;
 
     public ScriptPage<PortalJumpInstructionCondition> getPageList(PortalJumpInstructionCondition condition){
         ScriptPage<PortalJumpInstructionCondition> scriptPage = new ScriptPage<PortalJumpInstructionCondition>();
@@ -58,15 +58,19 @@ public class PortalJumpInstructionService {
         return portalJumpInstructionDao.delete(condition);
     }
 
-    public Integer update(PortalJumpInstructionCondition condition){
-        return  portalJumpInstructionDao.update(condition);
+    public Integer update(PortalJumpInstructionCondition condition) throws Exception{
+        Integer result = portalJumpInstructionDao.update(condition);
+        PortalNotStartInstructionListConditon updateBean =new PortalNotStartInstructionListConditon();
+        updateBean.setStartApk(condition.getStartApk());
+        portalNotStartInstructionService.updateNotice(updateBean);
+        return result;
     }
 
     public PortalJumpInstructionCondition getOne(PortalJumpInstructionCondition condition){
 
         return portalJumpInstructionDao.getOne(condition);
     }
-    public PortalJumpInstructionCondition getActionById(PortalJumpInstructionCondition condition){
+    public PortalJumpInstructionVo getActionById(PortalJumpInstructionCondition condition){
 
         return portalJumpInstructionDao.getActionById(condition);
     }

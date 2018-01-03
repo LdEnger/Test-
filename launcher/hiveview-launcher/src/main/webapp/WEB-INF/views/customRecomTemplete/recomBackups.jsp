@@ -16,6 +16,10 @@
 <script src="${ctx}/res/js/bootstrap-modalmanager.js" type="text/javascript"></script>
 
 <style>
+    .cancel a{
+        position: relative;
+        z-index: 100;
+    }
     .table-striped tbody>tr:nth-child(odd)>td, .table-striped tbody>tr:nth-child(odd)>th{
         background:none;
     }

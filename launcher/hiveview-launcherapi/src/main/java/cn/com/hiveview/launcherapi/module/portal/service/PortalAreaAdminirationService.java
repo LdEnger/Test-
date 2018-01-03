@@ -34,11 +34,11 @@ public class PortalAreaAdminirationService {
         return scriptPage;
     }
     public Integer delete(PortalAreaAdminirationListCondition condition) throws  Exception{
-        PortalAreaContentListCondition portalAreaContentListCondition=new PortalAreaContentListCondition();
+   /*     PortalAreaContentListCondition portalAreaContentListCondition=new PortalAreaContentListCondition();
         portalAreaContentListCondition.setAreaId(condition.getId());
         if(portalAreaContentDao.getCount(portalAreaContentListCondition)>0){
             return -1;
-        }
+        }*/
         return this.portalAreaAdminirationDao.delete(condition);
     }
     public Integer save(PortalAreaAdminirationListCondition condition) throws Exception{

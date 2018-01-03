@@ -121,6 +121,9 @@ public class PortalTabGroupService {
         List<PortalTabPageEntity> result = new ArrayList<PortalTabPageEntity>();
         try {
             String groupRedisValue = Constants.GROUPLIST_BYTABID_REDIS_KEY+"_"+condition.getBelongTabId()+"_"+condition.getPage()+"_"+condition.getRows();
+            if("4.0".equals(condition.getVersion())){
+                groupRedisValue+="_4.0";
+            }
             String val = redisService.get(groupRedisValue);
             if(!StringUtils.isEmpty(val)){
                 result  = JSON.parseObject(val, List.class);

@@ -16,4 +16,6 @@ public class PortalJumpInstructionCondition extends BaseCondition implements Ser
     private String type;
     private String actionName;
     private Integer effective;
+    private Integer startApk;
+    private String startApkName;
 }
