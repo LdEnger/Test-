@@ -16,4 +16,6 @@ public class JumpInstructionCondition extends BaseCondition implements Serializa
     private String type;
     private String actionName;
     private Integer effective;
+    private Integer startApk;
+    private String startApkName;
 }
