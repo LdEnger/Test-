@@ -61,10 +61,10 @@ public class PortalAreaContenService  {
         return rev;
     }
 
-    public Object getAreaMinSeq(Object t){
+    public Object moveUp(Object t){
         Object rev = null;
         try {
-            String url = ConstantsUtil.domain + "PortalAreaContenController/getAreaMinSeq";
+            String url = ConstantsUtil.domain + "PortalAreaContenController/moveUp";
             rev = HttpsUtil.doPost(url,t);
         }catch (Exception e){
             e.printStackTrace();
@@ -74,10 +74,21 @@ public class PortalAreaContenService  {
     }
 
 
-    public Object getAreaMaxSeq(Object t){
+    public Object moveDown(Object t){
         Object rev = null;
         try {
-            String url = ConstantsUtil.domain + "PortalAreaContenController/getAreaMaxSeq";
+            String url = ConstantsUtil.domain + "PortalAreaContenController/moveDown";
+            rev = HttpsUtil.doPost(url,t);
+        }catch (Exception e){
+            e.printStackTrace();
+            logger.error(e);
+        }
+        return rev;
+    }
+    public Object moveTop(Object t){
+        Object rev = null;
+        try {
+            String url = ConstantsUtil.domain + "PortalAreaContenController/moveTop";
             rev = HttpsUtil.doPost(url,t);
         }catch (Exception e){
             e.printStackTrace();

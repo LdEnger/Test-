@@ -21,7 +21,7 @@ public class PortalAreaContenController {
 
     @ResponseBody
     @RequestMapping("/getPage")
-    public Object getPage(PortalAreaAdminirationCondition condition){
+    public Object getPage(PortalAreaContentCondition condition){
         try {
             return this.portalAreaContenService.getPage(condition);
         }catch (Exception e){
@@ -32,7 +32,7 @@ public class PortalAreaContenController {
 
     @ResponseBody
     @RequestMapping("/save")
-    public Object save(PortalAreaAdminirationCondition condition){
+    public Object save(PortalAreaContentCondition condition){
         try {
             return this.portalAreaContenService.save(condition);
         }catch (Exception e){
@@ -43,7 +43,7 @@ public class PortalAreaContenController {
 
     @ResponseBody
     @RequestMapping("/delete")
-    public Object delete(PortalAreaAdminirationCondition condition){
+    public Object delete(PortalAreaContentCondition condition){
         try {
             return this.portalAreaContenService.delete(condition);
         }catch (Exception e){
@@ -54,7 +54,7 @@ public class PortalAreaContenController {
 
     @ResponseBody
     @RequestMapping("/update")
-    public Object update(PortalAreaAdminirationCondition condition){
+    public Object update(PortalAreaContentCondition condition){
         try {
             return  this.portalAreaContenService.update(condition);
         }catch (Exception e){
@@ -64,20 +64,30 @@ public class PortalAreaContenController {
     }
 
     @ResponseBody
-    @RequestMapping("/getAreaMinSeq")
-    public Object getAreaMinSeq(PortalAreaContentCondition  condition){
+    @RequestMapping("/moveUp")
+    public Object moveUp(PortalAreaContentCondition  condition){
         try {
-            return  this.portalAreaContenService.update(condition);
+            return  this.portalAreaContenService.moveUp(condition);
         }catch (Exception e){
             e.printStackTrace();
         }
         return  null;
     }
     @ResponseBody
-    @RequestMapping("/getAreaMaxSeq")
-    public Object getAreaMaxSeq(PortalAreaContentCondition  condition){
+    @RequestMapping("/moveDown")
+    public Object moveDown(PortalAreaContentCondition  condition){
         try {
-            return  this.portalAreaContenService.update(condition);
+            return  this.portalAreaContenService.moveDown(condition);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return  null;
+    }
+    @ResponseBody
+    @RequestMapping("/moveTop")
+    public Object moveTop(PortalAreaContentCondition  condition){
+        try {
+            return  this.portalAreaContenService.moveTop(condition);
         }catch (Exception e){
             e.printStackTrace();
         }
